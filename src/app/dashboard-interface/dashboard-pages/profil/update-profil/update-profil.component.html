@@ -1,0 +1,169 @@
+<!-------------------------------------- formulaire -------------------------------------------->
+<form [formGroup]="updateProfilForm" (ngSubmit)="updateProfil()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Modifier vos informations</h1>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="champ">
+        <!-- Validation du nom  -->
+        <div class="form-data">
+          <mat-form-field appearance="outline">
+            <mat-label>Nom</mat-label>
+            <input
+              formControlName="firstname"
+              [(ngModel)]="firstname"
+              matInput
+              placeholder="John"
+            />
+          </mat-form-field>
+          <span
+            class="error"
+            *ngIf="
+              updateProfilForm.hasError('required', 'firstname') &&
+              updateProfilForm.controls['firstname'].touched
+            "
+            >Le nom est obligatoire !</span
+          >
+        </div>
+
+        <!-- Validation du prenom  -->
+        <div class="form-data">
+          <mat-form-field appearance="outline">
+            <mat-label>Prénom</mat-label>
+            <input
+              formControlName="lastname"
+              [(ngModel)]="lastname"
+              matInput
+              placeholder="Doe"
+            />
+          </mat-form-field>
+          <span
+            class="error"
+            *ngIf="
+              updateProfilForm.hasError('required', 'lastname') &&
+              updateProfilForm.controls['lastname'].touched
+            "
+            >Le prénom est obligatoire !</span
+          >
+        </div>
+
+        <!-- Validation de l'email  -->
+        <!-- <div class="form-data">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              formControlName="email"
+              [(ngModel)]="email"
+              matInput
+              placeholder="Exemple@gmail.com"
+            />
+          </mat-form-field>
+          <span
+            class="error"
+            *ngIf="
+              updateProfilForm.hasError('required', 'email') &&
+              updateProfilForm.controls['email'].touched
+            "
+            >L'email est obligatoire !</span
+          >
+          <span
+            class="error"
+            *ngIf="
+              updateProfilForm.hasError('pattern', 'email') &&
+              updateProfilForm.controls['email'].touched
+            "
+            >L'email est invalide !</span
+          >
+        </div> -->
+
+        <!-- Validation numero de telephone -->
+        <div class="form-data">
+          <mat-form-field appearance="outline">
+            <mat-label>Numéro de téléphone</mat-label>
+            <input
+              formControlName="phone"
+              [(ngModel)]="phone"
+              type="number"
+              matInput
+              placeholder="653432424"
+            />
+          </mat-form-field>
+          <span
+            class="error"
+            *ngIf="
+              updateProfilForm.hasError('required', 'phone') &&
+              updateProfilForm.controls['phone'].touched
+            "
+            >Le numéro de téléphone est obligatoire !</span
+          >
+          <span
+            class="error"
+            *ngIf="
+              updateProfilForm.hasError('pattern', 'phone') &&
+              updateProfilForm.controls['phone'].touched
+            "
+            >Le numéro de téléphone est invalide !</span
+          >
+        </div>
+
+        <!-- Validation de la date de naissance -->
+        <!-- <div class="form-data">
+          <mat-form-field appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input formControlName="dob" matInput [matDatepicker]="picker" />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div> -->
+
+        <!-- validation du champ pays -->
+        <!-- <div class="form-data">
+          <mat-form-field appearance="outline">
+            <mat-label>Pays</mat-label>
+            <input formControlName="country" matInput placeholder="Cameroun" />
+          </mat-form-field>
+        </div> -->
+
+        <!-- validation du champ ville -->
+        <!-- <div class="form-data">
+          <mat-form-field appearance="outline">
+            <mat-label>Ville</mat-label>
+            <input formControlName="city" matInput placeholder="Douala" />
+          </mat-form-field>
+        </div> -->
+
+        <!-- Vaidation du genre  -->
+        <div class="form-data gender">
+          <mat-form-field appearance="outline">
+            <mat-label>Genre</mat-label>
+            <mat-select formControlName="sexe" [(ngModel)]="sexe">
+              @for (genders of gender; track genders) {
+              <mat-option [value]="genders.value">{{
+                genders.viewValue
+              }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          <span
+            class="error"
+            *ngIf="
+              updateProfilForm.hasError('required', 'sexe') &&
+              updateProfilForm.controls['sexe'].touched
+            "
+            >Le genre est obligatoire !</span
+          >
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-footer>
+      <div class="buttons">
+        <button (click)="close()">Annuler</button>
+        <button type="submit">Enregistrer</button>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</form>

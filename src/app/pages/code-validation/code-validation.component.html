@@ -1,0 +1,99 @@
+<section>
+  <div class="container">
+    <div class="left-side">
+      <div class="content">
+        <div class="title">
+          <img src="images/icon-site.png" alt="icon-site.png" />
+          <h1>get<span>smarter</span></h1>
+        </div>
+        <h2>Modification du mot de passe</h2>
+        <p class="welcome">Renseignez le code reçu</p>
+        <form [formGroup]="codeActivationForm" (ngSubmit)="confirm()">
+          <!-- code field  -->
+          <div class="code">
+            <mat-form-field appearance="outline">
+              <mat-label>Code</mat-label>
+              <input formControlName="code" matInput placeholder="123456" />
+              <mat-icon matIconPrefix>123</mat-icon>
+            </mat-form-field>
+            <span
+              class="error"
+              *ngIf="
+                codeActivationForm.hasError('required', 'code') &&
+                codeActivationForm.controls['code'].touched
+              "
+              >Le code d'activation est obligatoire !</span
+            >
+            <span
+              class="error"
+              *ngIf="
+                codeActivationForm.hasError('pattern', 'code') &&
+                codeActivationForm.controls['code'].touched
+              "
+              >Le code d'activation ne doit contenir que des chiffres !</span
+            >
+            <span
+              class="error"
+              *ngIf="
+                codeActivationForm.hasError('pattern', 'code') &&
+                codeActivationForm.controls['code'].touched
+              "
+              >Le code d'activation doit contenir exactement 6 chiffres !</span
+            >
+          </div>
+
+          <!-- password field  -->
+          <div class="password">
+            <mat-form-field appearance="outline">
+              <mat-label>Entrer votre nouveau mot de passe</mat-label>
+              <input
+                matInput
+                [type]="isPasswordHidden ? 'password' : 'text'"
+                formControlName="password"
+              />
+
+              <mat-icon matIconPrefix>lock</mat-icon>
+              <button
+                type="button"
+                mat-icon-button
+                matSuffix
+                (click)="clickEvent($event)"
+                [attr.aria-label]="
+                  isPasswordHidden ? 'Hide password' : 'Show password'
+                "
+                [attr.aria-pressed]="isPasswordHidden"
+              >
+                <mat-icon>{{
+                  isPasswordHidden ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+            </mat-form-field>
+            <span
+              class="error"
+              *ngIf="
+                codeActivationForm.hasError('required', 'password') &&
+                codeActivationForm.controls['password'].touched
+              "
+            >
+              Le mot de passe est obligatoire !</span
+            >
+          </div>
+          <button class="submit" type="submit">valider</button>
+        </form>
+      </div>
+    </div>
+    <div class="right-side">
+      <div class="image">
+        <img
+          src="images/forgot-the-password.webp"
+          alt="forgot-the-password.webp"
+        />
+      </div>
+
+      <p>
+        Votre code d'activation vous permet d'activer votre compte utiisateur.
+      </p>
+    </div>
+  </div>
+</section>
+<ngx-spinner></ngx-spinner>

@@ -1,0 +1,163 @@
+<section>
+  <div class="container">
+    <div class="tutor">
+      <div class="img">
+        <div class="image">
+          <img *ngIf="safeImageUrl; else noImage" [src]="safeImageUrl" />
+          <ng-template #noImage>
+            <img src="/images/image_not_found.jpg" alt="user" />
+          </ng-template>
+        </div>
+        <form
+          *ngIf="
+            role === 'EDITEUR' ||
+            role === 'MANAGER' ||
+            role === 'ADMINISTRATEUR'
+          "
+          (ngSubmit)="uploadImageTutor(image)"
+          enctype="multipart/form-data"
+        >
+          <label for="file-upload" class="custom-file-upload">
+            <mat-icon>cloud_upload</mat-icon><span>Modifier</span>
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            name="image"
+            (change)="onFileSelected($event)"
+          />
+        </form>
+      </div>
+      <div class="subheading">
+        <div>
+          <p>
+            <mat-icon>sort_by_alpha</mat-icon>
+            <span>Nom complet</span>
+          </p>
+          <h4>{{ fullname ? fullname : "Pas renseigné" }}</h4>
+        </div>
+        <div>
+          <p>
+            <mat-icon>alternate_email</mat-icon>
+            <span>email</span>
+          </p>
+          <h4>{{ email ? email : "Pas renseigné" }}</h4>
+        </div>
+        <div>
+          <p>
+            <mat-icon>phone_in_talk</mat-icon>
+            <span>Numéro téléphone</span>
+          </p>
+          <h4>{{ phonenumber ? phonenumber : "Pas renseigné" }}</h4>
+        </div>
+        <div>
+          <p>
+            <mat-icon>manage_accounts</mat-icon>
+            <span>type tuteur</span>
+          </p>
+          <h4>{{ typeTutor ? typeTutor : "Pas renseigné" }}</h4>
+        </div>
+      </div>
+    </div>
+    <div class="student">
+      <div class="heading">
+        <div>
+          <h4>etudiants parrainés</h4>
+          <span class="getsmarter-prof">Liste des étudiants</span>
+        </div>
+        <button
+          *ngIf="
+            role === 'CONTRIBUTEUR' ||
+            role === 'EDITEUR' ||
+            role === 'MANAGER' ||
+            role === 'ADMINISTRATEUR'
+          "
+          (click)="addStudentToTutor()"
+        >
+          <mat-icon>edit</mat-icon>
+          <span>Ajouter</span>
+        </button>
+      </div>
+      <div class="cards">
+        <!-- Afficher un message si aucune session  n'est enregistrée -->
+        <div *ngIf="studentTotal === 0; else studentTutor" class="no-data">
+          <p>Aucun étudiant parrainé !</p>
+        </div>
+
+        <ng-template #studentTutor>
+          <table>
+            <thead>
+              <tr>
+                <th>N°</th>
+                <th>Nom</th>
+                <th>Session</th>
+                <th>Spécialité</th>
+                <th class="date-enregistrement">Date d'enregistrement</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of student; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td class="startDate">
+                  <span
+                    ><img
+                      *ngIf="item.img; else defaultImage"
+                      [src]="'data:image/jpeg;base64,' + item.img.data"
+                      alt="Image session" />
+                    <ng-template #defaultImage>
+                      <img
+                        src="images/unnamed.jpg"
+                        alt="unnamed.jpg"
+                      /> </ng-template></span
+                  ><span>{{ item.lastname + " " + item.firstname }}</span>
+                </td>
+                <td>{{ item.session.dateDebut }}</td>
+                <td>{{ item.formation.specialite }}</td>
+                <td class="date-enregistrement">{{ item.createDate }}</td>
+                <td class="more">
+                  <button class="more-icon" (click)="toggleModal(i, $event)">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <div
+                    class="modal"
+                    [ngClass]="{ show: isModalVisible[i] }"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <div class="text">
+                      <button (click)="consulterStudent(item.id)">
+                        <img
+                          src="/images/eye-svgrepo-com.svg"
+                          alt="eye-svgrepo-com.svg"
+                        />
+                        <span class="see">Consulter</span>
+                      </button>
+                    </div>
+                    <div
+                      *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+                      class="text"
+                    >
+                      <button (click)="deleteStudentToTutor(item)">
+                        <img
+                          src="/images/delete-svgrepo-com.svg"
+                          alt="delete-svgrepo-com.svg"
+                        />
+                        <span class="delete">Supprimer</span>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="back">
+    <button (click)="backPage()">
+      <mat-icon>west</mat-icon>
+    </button>
+  </div>
+</section>

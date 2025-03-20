@@ -1,0 +1,232 @@
+@import "../../../../styles.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+  background-color: $background;
+  padding: 10rem 2rem 5rem 2rem;
+  overflow: auto;
+
+  .first-section {
+    display: flex;
+    gap: 4rem;
+    margin-bottom: 8rem;
+
+    .first-bloc {
+      width: 30%;
+      border-radius: 0.5rem;
+      background-color: $white;
+      box-shadow: 0 0.5rem 0.5rem #ddd;
+      padding: 2rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+
+      .text {
+        h4 {
+          font-size: 2.5rem;
+          text-align: center;
+          margin-bottom: 2rem;
+          color: $logo-color;
+
+          span {
+            font-size: 1.8rem;
+          }
+
+          img {
+            width: 2rem;
+            display: block;
+            margin: 0 auto;
+          }
+        }
+
+        p {
+          font-size: 1.4rem;
+          text-align: center;
+        }
+      }
+
+      .image {
+        width: 100%;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+    .second-bloc {
+      width: 70%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      background-color: transparent;
+
+      .card {
+        border-radius: 0.5rem;
+        background-color: $white;
+        box-shadow: 0 0.5rem 0.5rem #ddd;
+        padding: 1rem 2rem;
+        border-bottom: 0.2rem solid $logo-color;
+
+        .title {
+          display: flex;
+          justify-content: space-between;
+          align-items: start;
+          margin-bottom: 2rem;
+
+          p {
+            font-size: 3rem;
+            color: $logo-color;
+          }
+
+          h2 {
+            font-size: 1.6rem;
+            text-transform: capitalize;
+          }
+
+          span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 5rem;
+            width: 5rem;
+            background-color: $logo-color;
+            color: $white;
+            font-size: 1.8rem;
+            border-radius: 100%;
+          }
+        }
+
+        p {
+          font-size: 1.2rem;
+          font-weight: 400;
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+
+  .second-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    align-items: stretch;
+
+    .diagramme {
+      border-radius: 0.5rem;
+      background-color: $white;
+      box-shadow: 0 0.5rem 0.5rem #ddd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .chart {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .calendar {
+      border-radius: 0.5rem;
+      background-color: $white;
+      box-shadow: 0 0.5rem 0.5rem #ddd;
+    }
+
+    .notifications {
+      border-radius: 0.5rem;
+      background-color: $white;
+      box-shadow: 0 0.5rem 0.5rem #ddd;
+      // height: 100%;
+      padding: 2rem;
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+/***************************** MEDIA QUERY ******************************/
+@media screen and (max-width: 1600px) {
+  section {
+    .first-section {
+      .first-bloc {
+        flex-direction: column-reverse;
+
+        .image {
+          img {
+            width: 60%;
+          }
+        }
+      }
+    }
+
+    // .second-section {
+    //   grid-template-columns: repeat(2, 1fr);
+
+    // .calendar {
+    //   display: none;
+    // }
+    // }
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  section {
+    .first-section {
+      .first-bloc {
+        display: none;
+      }
+
+      .second-bloc {
+        width: 100%;
+      }
+    }
+
+    .second-section {
+      grid-template-columns: repeat(1, 1fr);
+
+      .diagramme {
+        // height: 50rem;
+        width: 100%;
+        overflow: auto;
+      }
+
+      .calendar {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  section {
+    .first-section {
+      .second-bloc {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  section {
+    padding: 10rem 2rem 3rem 2rem;
+    .first-section {
+      margin-bottom: 4rem;
+      .second-bloc {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+
+    .second-section {
+      .diagramme {
+        height: auto;
+      }
+    }
+  }
+}

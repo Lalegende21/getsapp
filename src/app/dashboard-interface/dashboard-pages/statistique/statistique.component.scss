@@ -1,0 +1,221 @@
+@import "../../../../styles.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+  background-color: $background;
+  padding: 10rem 2rem 5rem 2rem;
+  overflow: auto;
+
+  .no-data {
+    background-color: $white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      font-weight: 600;
+      font-size: 2rem;
+    }
+  }
+
+  h1 {
+    font-size: 3rem;
+    // color: $logo-color;
+    text-transform: capitalize;
+    font-weight: 500;
+    margin-bottom: 4rem;
+    background: #000046; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #1cb5e0,
+      #000046
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #1cb5e0, #000046);
+    color: $white;
+    text-align: center;
+    border-radius: 0.5rem;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: start;
+    gap: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .card,
+  .finance {
+    border-radius: 0.5rem;
+    background-color: $white;
+    box-shadow: 0 0.5rem 0.5rem #ddd;
+    padding: 2rem;
+    border-bottom: 4px solid $logo-color;
+
+    h2 {
+      font-size: 2rem;
+      color: $logo-color;
+      text-transform: capitalize;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      border-bottom: 4px solid $secondary;
+    }
+
+    .infos {
+      .info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 1rem 0;
+
+        p {
+          font-size: 1.5rem;
+          font-weight: 400;
+
+          &:first-child {
+            color: $info-dark;
+          }
+
+          &:last-child {
+            font-size: 1.8rem;
+            color: $primary;
+          }
+        }
+
+        #mt {
+          color: $success;
+        }
+
+        #mp {
+          color: $warning;
+        }
+
+        #mr {
+          color: $danger;
+        }
+      }
+    }
+
+    .search-bar {
+      margin-bottom: 10px;
+    }
+
+    .search-bar input {
+      width: 300px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .table {
+      margin-top: 2rem;
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        box-shadow: 0 0.5rem 0.5rem #ddd;
+
+        th {
+          padding: 1rem;
+          font-size: 1.8rem;
+          background-color: $primary;
+          font-weight: 500;
+        }
+
+        tr {
+          transition: all 0.2s;
+          &:hover {
+            background-color: rgba(172, 189, 206, 0.5);
+          }
+        }
+
+        td {
+          font-size: 1.5rem;
+          padding: 1rem 0;
+          text-align: center;
+          border-bottom: 2px solid $warning;
+        }
+      }
+    }
+
+    .pagination {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .pagination button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      color: $logo-color;
+    }
+
+    .pagination span {
+      font-size: 1.4rem;
+      margin: 0 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  section {
+    .cards {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}
+
+@media screen and (max-width: 810px) {
+  section {
+    .finance {
+      .table {
+        width: 100%;
+        overflow: auto;
+        table {
+          min-width: 800px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 510px) {
+  section {
+    h1 {
+      font-size: 2.2rem;
+    }
+    .card,
+    .finance {
+      .search-bar input {
+        width: 100%;
+      }
+    }
+
+    .card {
+      .table {
+        overflow: auto;
+        width: 100%;
+        table {
+          min-width: 400px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 395px) {
+  section {
+    .card,
+    .finance {
+      .infos {
+        .info {
+          flex-direction: column;
+        }
+      }
+    }
+  }
+}

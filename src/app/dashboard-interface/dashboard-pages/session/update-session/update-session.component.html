@@ -1,0 +1,69 @@
+<form [formGroup]="updateSessionForm" (ngSubmit)="updateSession()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Modifier cette session de formation</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ date de debut  -->
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Date de debut</mat-label>
+          <input
+            [(ngModel)]="dateDebut"
+            formControlName="dateDebut"
+            matInput
+            placeholder="Ex: Mai 2024"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateSessionForm.hasError('required', 'dateDebut') &&
+            updateSessionForm.controls['dateDebut'].touched
+          "
+          >La date de debut de session est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ statut  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Statut</mat-label>
+          <mat-select formControlName="statuts" [(ngModel)]="statuts">
+            @for (statut of statut; track statut) {
+            <mat-option [value]="statut.value">{{
+              statut.viewValue
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Validation du champ centre  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Campus</mat-label>
+          <mat-select formControlName="center">
+            <mat-option *ngFor="let item of center" [value]="item">{{
+              item.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateSessionForm.hasError('required', 'center') &&
+            updateSessionForm.controls['center'].touched
+          "
+          >Le centre est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

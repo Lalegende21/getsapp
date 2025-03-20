@@ -1,0 +1,168 @@
+@import "../../../../../styles.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+  background-color: $background;
+  padding: 10rem 2rem 5rem 2rem;
+  overflow: auto;
+
+  h1 {
+    font-size: 3rem;
+    // color: $logo-color;
+    text-transform: capitalize;
+    font-weight: 500;
+    margin-bottom: 6rem;
+    background: #000046; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #1cb5e0,
+      #000046
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #1cb5e0, #000046);
+    color: $white;
+    text-align: center;
+    border-radius: 0.5rem;
+  }
+
+  .cards {
+    width: 90%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 3rem;
+
+    .card {
+      border-radius: 0.5rem;
+      background-color: $white;
+      box-shadow: 0 0.5rem 0.5rem #ddd;
+      padding: 2rem;
+      width: 100%;
+      border-bottom: 4px solid $logo-color;
+      text-align: center;
+
+      h2 {
+        font-size: 2rem;
+        font-weight: 500;
+        text-transform: capitalize;
+        color: $logo-color;
+        margin-bottom: 2rem;
+      }
+
+      .autorisation {
+        margin-bottom: 2rem;
+
+        p {
+          font-size: 1.4rem;
+          text-align: center;
+          margin: 2rem 0;
+        }
+
+        .check-list,
+        .access {
+          margin: 0;
+          padding-left: 1.2rem;
+          text-align: left;
+        }
+
+        .check-list li,
+        .access li {
+          position: relative;
+          list-style-type: none;
+          padding-left: 2.5rem;
+          margin-bottom: 0.5rem;
+          font-size: 1.3rem;
+          font-weight: 500;
+        }
+
+        .check-list li:before,
+        .access li:before {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 0;
+          top: -2px;
+          width: 5px;
+          height: 11px;
+          border-width: 0 2px 2px 0;
+          border-style: solid;
+          transform-origin: bottom left;
+          transform: rotate(45deg);
+        }
+
+        .check-list li:before {
+          border-color: $success;
+        }
+
+        .access li:before {
+          border-color: $danger;
+        }
+      }
+
+      button {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 0.5rem;
+        background-color: $logo-color;
+        color: $white;
+        font-size: 1.4rem;
+        box-shadow: 0 0.5rem 0.5rem #b3b3b3;
+        cursor: pointer;
+        transition: all 0.3s ease-in;
+
+        &:hover {
+          transform: scale(1.08);
+        }
+      }
+
+      .disabled-button {
+        cursor: not-allowed;
+        background-color: #b0b0b0 !important;
+        opacity: 0.6;
+      }
+    }
+  }
+
+  .back {
+    position: absolute;
+    top: 10%;
+    left: 2%;
+
+    button {
+      color: $logo-color;
+      padding: 0.1rem 1rem;
+      background-color: $white;
+      border-radius: 0.5rem;
+      border: none;
+      box-shadow: 0 0 0.3rem $gris-pale;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: $secondary;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  section {
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 4rem;
+    }
+    .cards {
+      width: 100%;
+      grid-template-columns: repeat(1, 1fr);
+
+      .card {
+        .autorisation {
+          .check-list,
+          .access {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,588 @@
+@import "../../../../styles.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+  background-color: $background;
+  padding: 10rem 2rem 5rem 2rem;
+  overflow: auto;
+
+  .no-data {
+    background-color: $white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      font-weight: 600;
+      font-size: 2rem;
+    }
+  }
+
+  /************* start first section ******************/
+  .first-section {
+    h1 {
+      font-size: 3rem;
+      // color: $logo-color;
+      text-transform: capitalize;
+      font-weight: 500;
+      margin-bottom: 4rem;
+      background: #000046; /* fallback for old browsers */
+      background: -webkit-linear-gradient(
+        to right,
+        #1cb5e0,
+        #000046
+      ); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #1cb5e0, #000046);
+      color: $white;
+      text-align: center;
+      border-radius: 0.5rem;
+    }
+
+    .second-bloc {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3rem;
+      background-color: transparent;
+      margin-bottom: 8rem;
+
+      .card {
+        border-radius: 0.5rem;
+        background-color: $white;
+        box-shadow: 0 0.5rem 0.5rem #ddd;
+        padding: 2rem;
+        border-bottom: 0.2rem solid $logo-color;
+
+        .title {
+          display: flex;
+          justify-content: space-between;
+          align-items: start;
+          margin-bottom: 2rem;
+
+          p {
+            font-size: 3rem;
+            color: $logo-color;
+          }
+
+          h2 {
+            font-size: 1.6rem;
+            text-transform: capitalize;
+          }
+
+          span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 5rem;
+            width: 5rem;
+            background-color: $logo-color;
+            color: $white;
+            font-size: 1.8rem;
+            border-radius: 100%;
+          }
+        }
+
+        p {
+          font-size: 1.2rem;
+          font-weight: 400;
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+  /************* end first section ******************/
+
+  /************* start second section ******************/
+  .second-section {
+    .sort {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: end;
+      gap: 2rem;
+      margin-bottom: 2rem;
+
+      h2 {
+        font-size: 2rem;
+        font-weight: 500;
+        text-transform: capitalize;
+      }
+
+      .options {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        input[type="checkbox"] {
+          opacity: 0;
+        }
+
+        #check:checked ~ .option .label1 {
+          background-color: $logo-color;
+          color: $white;
+        }
+
+        #check:checked ~ .option .input1 {
+          display: block;
+        }
+
+        #check2:checked ~ .option .label2 {
+          background-color: $logo-color;
+          color: $white;
+        }
+
+        #check2:checked ~ .option .input2 {
+          display: block;
+        }
+
+        .option {
+          .label1,
+          .label2 {
+            background-color: $white;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.2rem 0.5rem #ddd;
+            color: $gris-pale;
+            cursor: pointer;
+            transition: all 0.3s;
+
+            label {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 0.5rem;
+              cursor: pointer;
+
+              span {
+                display: block;
+                font-size: 1.6rem;
+                cursor: pointer;
+              }
+            }
+
+            &:hover {
+              background-color: $bleu-pale;
+              color: $white;
+            }
+          }
+
+          .input1,
+          .input2 {
+            position: absolute;
+            width: 30%;
+            top: 0;
+            left: 0;
+            height: 100%;
+            display: none;
+            transition: all 0.3s;
+
+            div {
+              position: relative;
+
+              input {
+                width: 100%;
+                background-color: $white;
+                padding: 1.5rem 3rem;
+                border: 0.1rem solid $gris-pale;
+                border-radius: 0.4rem;
+                outline: none;
+                font-size: 1.6rem;
+
+                &:focus {
+                  border: 0.2rem solid $logo-color;
+                }
+
+                &::placeholder {
+                  font-size: 1.6rem;
+                  color: $gris-pale;
+                }
+              }
+
+              mat-icon {
+                position: absolute;
+                color: $gris-pale;
+                transform: translate(15%, 50%);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .cards {
+      // overflow: hidden;
+      position: relative;
+      width: 100%;
+      border-radius: 0.5rem;
+      background-color: $white;
+      box-shadow: 0 0.5rem 0.5rem #ddd;
+      padding: 2rem;
+      max-width: 100%;
+
+      table {
+        width: 100%;
+        padding: 0 1rem;
+        text-align: center;
+        border-collapse: collapse;
+
+        th {
+          padding: 1rem;
+          background-color: $background;
+          font-size: 1.8rem;
+          font-weight: 500;
+
+          .arrow-up::after {
+            content: "▲";
+            color: $logo-color;
+          }
+
+          .arrow-down::after {
+            content: "▼";
+            color: $logo-color;
+          }
+
+          // .arrow-neutral::after {
+          //   content: "—";
+          // }
+        }
+
+        tr {
+          transition: all 0.2s;
+          &:hover {
+            background-color: rgba(172, 189, 206, 0.5);
+          }
+        }
+
+        td {
+          font-size: 1.5rem;
+          padding: 1rem 0;
+
+          mat-icon {
+            color: $logo-color;
+          }
+        }
+
+        .startDate {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 2rem;
+
+          span:first-child {
+            display: block;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 100%;
+            overflow: hidden;
+            box-shadow: 0 0 0.4rem #ccc;
+
+            img {
+              height: 100%;
+              width: 100%;
+              object-fit: cover;
+            }
+          }
+
+          span:last-child {
+            display: block;
+          }
+        }
+
+        .session-statut {
+          position: relative;
+
+          span:first-child {
+            position: absolute;
+            left: 0%;
+            top: 0;
+            transform: translate(50%, 50%);
+            display: inline-block;
+            height: 3rem;
+            width: 3rem;
+            margin-right: 1rem;
+            border-radius: 0.5rem;
+          }
+
+          span:last-child {
+            margin-left: 0.5rem;
+          }
+        }
+
+        .green {
+          background-color: $success;
+        }
+        .red {
+          background-color: $danger;
+        }
+        .yellow {
+          background-color: $secondary;
+        }
+        .blue {
+          background-color: $logo-color;
+        }
+
+        .more {
+          position: relative;
+
+          .more-icon {
+            background-color: $background;
+            border-radius: 100%;
+            padding: 0.3rem;
+            border: none;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          .modal {
+            position: absolute;
+            z-index: 10;
+            border-radius: 0.5rem;
+            background-color: $white;
+            box-shadow: 0 0.5rem 0.5rem #ddd;
+            display: none;
+            transition: opacity 0.2s;
+
+            .text {
+              input {
+                display: none;
+              }
+
+              label {
+                color: $marron-brun;
+                font-size: 1.5rem;
+              }
+
+              button {
+                background-color: transparent;
+                border: none;
+                padding: 1rem 2rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                cursor: pointer;
+
+                img {
+                  width: 2rem;
+                  transition: all 0.2s ease-in;
+
+                  &:hover {
+                    transform: scale(1.2);
+                  }
+                }
+
+                span {
+                  font-size: 1.5rem;
+                }
+              }
+
+              .view {
+                color: $secondary;
+              }
+              .update {
+                color: $logo-color;
+              }
+              .delete {
+                color: $danger;
+              }
+
+              &:hover {
+                background-color: $background;
+              }
+            }
+          }
+        }
+
+        .more .modal.show {
+          display: block;
+        }
+      }
+    }
+
+    .pagination {
+      margin-top: 4rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .focus {
+        font-size: 1.5rem;
+        border: 0.1rem solid $logo-color;
+        color: $logo-color;
+      }
+
+      button {
+        display: block;
+        padding: 1rem 2rem;
+        margin: 0 0.5rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 0.4rem #ddd;
+        background-color: $white;
+        color: $logo-color;
+
+        &:first-child,
+        &:last-child {
+          margin: 0 1rem;
+          transition: all 0.2s ease-in-out;
+
+          &:hover {
+            background-color: $logo-color;
+            color: $white;
+          }
+        }
+      }
+    }
+
+    .pagination button.active {
+      font-weight: bold;
+      color: #fff;
+      background-color: $logo-color;
+      border: none;
+    }
+  }
+  /************* end second section ******************/
+}
+
+/*************************** media query **************************/
+@media screen and (max-width: 1600px) {
+  section {
+    .first-section {
+      .second-bloc {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  section {
+    .second-section {
+      .sort {
+        flex-direction: column;
+        align-items: end;
+
+        h2 {
+          width: 100%;
+          text-align: center;
+        }
+
+        .options {
+          .option {
+            .input1,
+            .input2 {
+              transform: translateY(50%);
+            }
+          }
+        }
+      }
+
+      .cards {
+        table {
+          .session-statut {
+            span:first-child {
+              display: none;
+            }
+
+            span:last-child {
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  section {
+    .first-section {
+      .second-bloc {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
+
+    .second-section {
+      .sort {
+        align-items: center;
+
+        .options {
+          margin-bottom: 4rem;
+          .option {
+            .input1,
+            .input2 {
+              transform: translateY(0);
+              top: 80%;
+              width: 100%;
+            }
+          }
+        }
+      }
+
+      .cards {
+        margin-top: 3rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  section {
+    .second-section {
+      .cards {
+        overflow: auto;
+        table {
+          min-width: 600px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  section {
+    .first-section {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .second-bloc {
+        margin-bottom: 4rem;
+      }
+    }
+    .second-section {
+      .sort {
+        .options {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+          width: 100%;
+
+          .option {
+            .input1,
+            .input2 {
+              top: 85%;
+            }
+          }
+        }
+      }
+
+      .cards {
+        margin-top: 3rem;
+
+        table {
+          .more {
+            .modal {
+              left: -70%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

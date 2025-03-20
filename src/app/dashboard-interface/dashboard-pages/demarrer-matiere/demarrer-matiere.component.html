@@ -1,0 +1,235 @@
+<section>
+  <!-- Afficher un message si aucune session  n'est enregistrée -->
+  <div *ngIf="allStartCourse === 0; else startCourseTemplate" class="no-data">
+    <p>Aucune session enregistrée !</p>
+  </div>
+
+  <ng-template #startCourseTemplate>
+    <!-- start section1  -->
+    <div class="first-section">
+      <h1>Demarrer matière</h1>
+      <div class="second-bloc">
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ allStartCourse ? allStartCourse : "0" }}</p>
+              <h2>matières totales demarrées</h2>
+            </div>
+            <span><mat-icon>play_lesson</mat-icon></span>
+          </div>
+          <p>
+            {{ lastStartCourse.course.name }}
+          </p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ allStartCourseRecently ? allStartCourseRecently : "0" }}</p>
+              <h2>matières demarrées recemment</h2>
+            </div>
+            <span><mat-icon>play_lesson</mat-icon></span>
+          </div>
+          <p>
+            {{
+              lastStartCourseRecently
+                ? lastStartCourseRecently.course.name
+                : "Aucune matière demarrée récemment"
+            }}
+          </p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ allStartCourseEnCours ? allStartCourseEnCours : "0" }}</p>
+              <h2>matières en cours</h2>
+            </div>
+            <span><mat-icon>play_lesson</mat-icon></span>
+          </div>
+          <p>
+            {{
+              startCourseEnCours
+                ? startCourseEnCours.course.name
+                : "Aucune matière demarrée"
+            }}
+          </p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ allStartCourseTermine ? allStartCourseTermine : "0" }}</p>
+              <h2>matières terminées</h2>
+            </div>
+            <span><mat-icon>play_lesson</mat-icon></span>
+          </div>
+          <p>
+            {{
+              startCourseTermine
+                ? startCourseTermine.course.name
+                : "Aucune matière terminée"
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- end section1  -->
+
+    <!-- start section2  -->
+    <div class="second-section">
+      <div class="sort">
+        <h2>Rechercher par:</h2>
+
+        <!-- all options  -->
+        <div class="options">
+          <!-- first option  -->
+          <input type="checkbox" name="#" id="check" />
+          <div class="option">
+            <div class="label1">
+              <label for="check"
+                ><mat-icon>sort_by_alpha</mat-icon><span>Nom</span></label
+              >
+            </div>
+            <div class="input1">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  #filterName
+                  (keyup)="filterByName(filterName.value)"
+                  placeholder="Nom..."
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- second option  -->
+          <input type="checkbox" name="#" id="check2" />
+          <div class="option">
+            <div class="label2">
+              <label for="check2"
+                ><mat-icon>timer</mat-icon><span>Session</span></label
+              >
+            </div>
+            <div class="input2">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  #filterSession
+                  (keyup)="filterBySession(filterSession.value)"
+                  id="input2"
+                  placeholder="Session..."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- table of session -->
+      <div class="cards" [@pageTransition]="currentPageState">
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Nom</th>
+              <th>Professeur</th>
+              <th>Session</th>
+              <th>Horaire</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of currentVisibleData; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                {{ item.course.name }}
+              </td>
+              <td>{{ item.professor.fullname }}</td>
+              <td>{{ item.session.dateDebut }}</td>
+              <td>{{ item.horaire }}</td>
+              <td>
+                <span
+                  class="StartCourseStatut"
+                  [ngClass]="getStatusClass(item.statut)"
+                ></span>
+                <!-- <span>{{ item.statut }}</span> -->
+              </td>
+              <td class="more">
+                <button class="more-icon" (click)="toggleModal(i, $event)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <div
+                  class="modal"
+                  [ngClass]="{ show: isModalVisible[i] }"
+                  (click)="$event.stopPropagation()"
+                >
+                  <div class="text">
+                    <button (click)="consulterStartCourse(item.id)">
+                      <img
+                        src="images/eye-svgrepo-com.svg"
+                        alt="eye-svgrepo-com.svg"
+                      />
+                      <span class="view">Consulter</span>
+                    </button>
+                  </div>
+                  <div
+                    *ngIf="
+                      role === 'MANAGER' ||
+                      role === 'ADMINISTRATEUR'
+                    "
+                    class="text"
+                  >
+                    <button
+                      (click)="onOptionSelectedDelete(i, $event, item.id)"
+                    >
+                      <img
+                        src="images/delete-svgrepo-com.svg"
+                        alt="delete-svgrepo-com.svg"
+                      />
+                      <span class="delete">Supprimer</span>
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- pagination  -->
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">
+          Précédent
+        </button>
+        <span *ngFor="let page of pageNumbers()">
+          <button
+            [class.active]="page === currentPage"
+            (click)="changePageWithAnimation(page)"
+          >
+            {{ page }}
+          </button>
+        </span>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage === pageNumbers().length"
+        >
+          Suivant
+        </button>
+      </div>
+    </div>
+    <!-- end section2  -->
+  </ng-template>
+
+  <!-- add button professor  -->
+  <app-add-buttton
+    *ngIf="
+      role === 'CONTRIBUTEUR' ||
+      role === 'EDITEUR' ||
+      role === 'MANAGER' ||
+      role === 'ADMINISTRATEUR'
+    "
+    [buttonText]="'Demarrer une matière'"
+    (click)="startCourse()"
+  ></app-add-buttton>
+</section>

@@ -1,0 +1,264 @@
+<section>
+  <div class="container">
+    <div class="left-side">
+      <div class="content">
+        <div class="title">
+          <img src="images/icon-site.png" alt="icon-site.png" />
+          <h1>get<span>smarter</span></h1>
+        </div>
+        <h2>Créer votre compte en quelques clics!</h2>
+        <p class="welcome">Bienvenue. Selectionner la méthode de création</p>
+        <div class="btn-login">
+          <button>
+            <img
+              src="images/google-svgrepo-com.svg"
+              alt="google-svgrepo-com.svg"
+            />
+            <span>google</span>
+          </button>
+        </div>
+        <p class="continue">où continuer avec votre email</p>
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+          <div class="fields">
+            <!-- firstname field  -->
+            <div class="firstname">
+              <mat-form-field appearance="outline">
+                <mat-label>Nom</mat-label>
+                <input
+                  formControlName="firstname"
+                  matInput
+                  placeholder="John"
+                />
+                <mat-icon matIconPrefix>person</mat-icon>
+              </mat-form-field>
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('required', 'firstname') &&
+                  registerForm.controls['firstname'].touched
+                "
+                >Le nom est obligatoire !</span
+              >
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('minlength', 'firstname') &&
+                  registerForm.controls['firstname'].touched
+                "
+                >Le nom doit avoir minimum 3 caractères !</span
+              >
+            </div>
+            <!-- firstname field  -->
+            <div class="lastname">
+              <mat-form-field appearance="outline">
+                <mat-label>Prénom</mat-label>
+                <input formControlName="lastname" matInput placeholder="Doe" />
+                <mat-icon matIconPrefix>person</mat-icon>
+              </mat-form-field>
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('required', 'lastname') &&
+                  registerForm.controls['lastname'].touched
+                "
+                >Le prénom est obligatoire !</span
+              >
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('minlength', 'lastname') &&
+                  registerForm.controls['lastname'].touched
+                "
+                >Le prénom doit avoir minimum 3 caractères !</span
+              >
+            </div>
+            <!-- email field  -->
+            <div class="email">
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input
+                  formControlName="email"
+                  matInput
+                  placeholder="Exemple@gmail.com"
+                />
+                <mat-icon matIconPrefix>mail</mat-icon>
+              </mat-form-field>
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('required', 'email') &&
+                  registerForm.controls['email'].touched
+                "
+                >L'email est obligatoire !</span
+              >
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('pattern', 'email') &&
+                  registerForm.controls['email'].touched
+                "
+              >
+                L'email est invalide !</span
+              >
+            </div>
+            <!-- phonenumber field  -->
+            <div class="phonenumber">
+              <mat-form-field appearance="outline">
+                <mat-label>Numéro de téléphone</mat-label>
+                <input
+                  formControlName="phonenumber"
+                  matInput
+                  placeholder="677777777"
+                />
+                <mat-icon matIconPrefix>phone</mat-icon>
+              </mat-form-field>
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('required', 'phonenumber') &&
+                  registerForm.controls['phonenumber'].touched
+                "
+                >Le numéro de téléphone est obligatoire !</span
+              >
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('pattern', 'phonenumber') &&
+                  registerForm.controls['phonenumber'].touched
+                "
+                >Le numéro de téléphone ne doit contenir que des chiffres
+                !</span
+              >
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('pattern', 'phonenumber') &&
+                  registerForm.controls['phonenumber'].touched
+                "
+                >Le numéro de téléphone doit contenir au minimum 9 chiffres
+                !</span
+              >
+            </div>
+            <!-- password field  -->
+            <div class="password">
+              <mat-form-field appearance="outline">
+                <mat-label>Enter your password</mat-label>
+                <input
+                  matInput
+                  [type]="hide() ? 'password' : 'text'"
+                  formControlName="password"
+                />
+                <mat-icon matIconPrefix>lock</mat-icon>
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="clickEvent($event)"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide()"
+                >
+                  <mat-icon>{{
+                    hide() ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('required', 'password') &&
+                  registerForm.controls['password'].touched
+                "
+              >
+                Le mot de passe est obligatoire !</span
+              >
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('minlength', 'password') &&
+                  registerForm.controls['password'].touched
+                "
+                >Le mot de passe doit avoir minimum 8 caractères !</span
+              >
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('pattern', 'password') &&
+                  registerForm.controls['password'].touched
+                "
+              >
+                Le mot de passe doit contenir un caractère spécial !
+              </span>
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('pattern', 'password') &&
+                  registerForm.controls['password'].touched
+                "
+              >
+                Le mot de passe doit avoir au moins un chiffre !
+              </span>
+            </div>
+
+            <!-- confirm password field  -->
+            <div class="cmdp">
+              <mat-form-field appearance="outline">
+                <mat-label>Enter your password</mat-label>
+                <input
+                  matInput
+                  [type]="hideCmp() ? 'password' : 'text'"
+                  formControlName="cmdp"
+                />
+                <mat-icon matIconPrefix>lock</mat-icon>
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="clickEventCmp($event)"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hideCmp()"
+                >
+                  <mat-icon>{{
+                    hideCmp() ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+              <span
+                class="error"
+                *ngIf="
+                  registerForm.hasError('required', 'cmdp') &&
+                  registerForm.controls['cmdp'].touched
+                "
+                >La confirmation du mot de passe est obligatoire !</span
+              >
+              <span
+                class="error"
+                *ngIf="registerForm?.errors?.['mismatch'] && registerForm.get('cmdp')?.touched"
+                >Les mots de passe ne sont pas identiques !</span
+              >
+            </div>
+          </div>
+          <button class="submit" type="submit">enregistrer</button>
+          <p class="login">
+            Vous avez déjà un compte?<a
+              routerLink="/login"
+              routerLinkActive="router-link-active"
+              >Connectez-vous</a
+            >
+          </p>
+        </form>
+      </div>
+    </div>
+    <div class="right-side">
+      <div class="image">
+        <img
+          src="images/WordPress-multi-page-form-768x768.webp"
+          alt="WordPress-multi-page-form-768x768.webp"
+        />
+      </div>
+
+      <p>
+        Créer votre compte afin de pouvoir être éligible à acceder à
+        l'application
+      </p>
+    </div>
+  </div>
+</section>
+<ngx-spinner></ngx-spinner>

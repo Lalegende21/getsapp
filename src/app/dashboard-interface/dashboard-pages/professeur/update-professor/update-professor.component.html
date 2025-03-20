@@ -1,0 +1,134 @@
+<form [formGroup]="updateProfessorForm" (ngSubmit)="updateProfessor()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Modifer ce professeur</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ noms  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Nom complet du professeur</mat-label>
+          <input
+            formControlName="fullname"
+            [(ngModel)]="fullname"
+            matInput
+            placeholder="John Doe"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateProfessorForm.hasError('required', 'fullname') &&
+            updateProfessorForm.controls['fullname'].touched
+          "
+          >Le nom du professeur est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            updateProfessorForm.hasError('minlength', 'fullname') &&
+            updateProfessorForm.controls['fullname'].touched
+          "
+          >Le nom du professeur doit avoir minimum 3 lettres minimum!</span
+        >
+      </div>
+
+      <!-- Validation du champ Identifiant CNI  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Identifiant CNI</mat-label>
+          <input
+            formControlName="cni"
+            [(ngModel)]="cni"
+            matInput
+            placeholder="20243125786534780"
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- Validation du champ Identifiant email  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            formControlName="email"
+            [(ngModel)]="email"
+            matInput
+            placeholder="johndoe@gmail.com"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateProfessorForm.hasError('required', 'email') &&
+            updateProfessorForm.controls['email'].touched
+          "
+          >L'email' est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            updateProfessorForm.hasError('pattern', 'email') &&
+            updateProfessorForm.controls['email'].touched
+          "
+          >L'email est invalide!</span
+        >
+      </div>
+
+      <!-- Validation du champ numero de telephone  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Numero telephone</mat-label>
+          <input
+            formControlName="phoneNumber"
+            [(ngModel)]="phoneNumber"
+            matInput
+            placeholder="670834210"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateProfessorForm.hasError('required', 'phoneNumber') &&
+            updateProfessorForm.controls['phoneNumber'].touched
+          "
+          >Le numéro de téléphone est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            updateProfessorForm.hasError('pattern', 'phoneNumber') &&
+            updateProfessorForm.controls['phoneNumber'].touched
+          "
+          >Le numéro de téléphone est invalide!</span
+        >
+      </div>
+
+      <!-- Validation du champ sexe  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Sexe</mat-label>
+          <mat-select formControlName="sexe" [(ngModel)]="sexe">
+            @for (sexe of sexes; track sexe) {
+            <mat-option [value]="sexe.value">{{ sexe.viewValue }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateProfessorForm.hasError('required', 'sexe') &&
+            updateProfessorForm.controls['sexe'].touched
+          "
+          >Le sexe est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

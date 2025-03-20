@@ -1,0 +1,77 @@
+@import "../../../../../../styles.scss";
+
+.container {
+  padding: 4rem;
+  max-height: 90vh;
+  overflow: auto;
+
+  transition: all 0.3s ease-in-out;
+
+  h1 {
+    font-size: 2rem;
+    color: $black;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .text {
+    margin-bottom: 1rem;
+    p {
+      font-size: 1.6rem;
+      margin-bottom: 3rem;
+      text-align: center;
+
+      span {
+        color: $primary;
+      }
+    }
+
+    .form {
+      mat-form-field {
+        width: 100%;
+      }
+
+      .error {
+        font-size: 1.2rem;
+        color: red;
+        display: block;
+        margin-top: -1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+      padding: 1rem 2rem;
+      border: none;
+      outline: none;
+      font-size: 1.2rem;
+      text-transform: capitalize;
+      color: $white;
+      border-radius: 0.2rem;
+      box-shadow: 0 0 0.3rem rgba($color: #000000, $alpha: 0.5);
+      cursor: pointer;
+      transition: all 0.2s ease-in;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      &:nth-child(1) {
+        background-color: $danger;
+      }
+
+      &:nth-child(2) {
+        background-color: $success;
+      }
+    }
+  }
+}

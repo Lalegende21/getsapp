@@ -1,0 +1,210 @@
+<section>
+  <!-- Afficher un message si aucune session  n'est enregistrée -->
+  <div *ngIf="centerTotal === 0; else center" class="no-data">
+    <p>Aucun campus enregistré !</p>
+  </div>
+
+  <ng-template #center>
+    <!-- start section1  -->
+    <div class="first-section">
+      <h1>campus</h1>
+      <div class="second-bloc">
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ centerTotal }}</p>
+              <h2>campus totals</h2>
+            </div>
+            <span><mat-icon>groups</mat-icon></span>
+          </div>
+          <p>{{ lastCenterTotal.name }}</p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ centerFrequentlyTotal }}</p>
+              <h2>campus ajoutés recemment</h2>
+            </div>
+            <span><mat-icon>groups</mat-icon></span>
+          </div>
+          <p>
+            {{
+              lastCenterTotalRecently
+                ? lastCenterTotalRecently.name
+                : "Aucun campus enregisté récemment"
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- end section1  -->
+
+    <!-- start section2  -->
+    <div class="second-section">
+      <div class="sort">
+        <h2>Rechercher par:</h2>
+
+        <!-- all options  -->
+        <div class="options">
+          <!-- first option  -->
+          <input type="checkbox" name="#" id="check" />
+          <div class="option">
+            <div class="label1">
+              <label for="check"
+                ><mat-icon>sort_by_alpha</mat-icon><span>Nom</span></label
+              >
+            </div>
+            <div class="input1">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  #filterNameCenter
+                  (keyup)="filterByName(filterNameCenter.value)"
+                  name="#"
+                  id="#"
+                  placeholder="Nom"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- second option  -->
+          <input type="checkbox" name="#" id="check2" />
+          <div class="option">
+            <div class="label2">
+              <label for="check2"
+                ><mat-icon>location_on</mat-icon
+                ><span>Localisation</span></label
+              >
+            </div>
+            <div class="input2">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  #filterLocalisationCenter
+                  (keyup)="filterByLocalisation(filterLocalisationCenter.value)"
+                  name="#"
+                  id="input2"
+                  placeholder="Localisation"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- table of session -->
+      <div class="cards" [@pageTransition]="currentPageState">
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th (click)="sortData('name')">
+                Nom <span [ngClass]="getSortIcon('name')"></span>
+              </th>
+              <th (click)="sortData('localisation')">
+                Localisation
+                <span [ngClass]="getSortIcon('localisation')"></span>
+              </th>
+              <th (click)="sortData('createDate')">
+                Date d'enregistrement
+                <span [ngClass]="getSortIcon('createDate')"></span>
+              </th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of currentVisibleData; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td class="startDate">
+                <span>
+                  <img
+                    *ngIf="item.img; else defaultImage"
+                    [src]="'data:image/jpeg;base64,' + item.img.data"
+                    alt="Image session"
+                  />
+                  <ng-template #defaultImage>
+                    <img src="images/unnamed.jpg" alt="unnamed.jpg" />
+                  </ng-template>
+                </span>
+                <span>{{ item.name }}</span>
+              </td>
+              <td>{{ item.localisation }}</td>
+              <td>{{ item.createDate | date : "medium" }}</td>
+              <td class="more">
+                <button class="more-icon" (click)="toggleModal(i, $event)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <div
+                  class="modal"
+                  [ngClass]="{ show: isModalVisible[i] }"
+                  (click)="$event.stopPropagation()"
+                >
+                  <div class="text">
+                    <button (click)="consulterCampus(item.id)">
+                      <img
+                        src="images/eye-svgrepo-com.svg"
+                        alt="eye-svgrepo-com.svg"
+                      />
+                      <span class="view">Consulter</span>
+                    </button>
+                  </div>
+                  <div
+                    class="text"
+                    *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+                  >
+                    <button
+                      (click)="onOptionSelectedDelete(i, $event, item.id)"
+                    >
+                      <img
+                        src="images/delete-svgrepo-com.svg"
+                        alt="delete-svgrepo-com.svg"
+                      />
+                      <span class="delete">Supprimer</span>
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- pagination  -->
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">
+          Précédent
+        </button>
+        <span *ngFor="let page of pageNumbers()">
+          <button
+            [class.active]="page === currentPage"
+            (click)="changePageWithAnimation(page)"
+          >
+            {{ page }}
+          </button>
+        </span>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage === pageNumbers().length"
+        >
+          Suivant
+        </button>
+      </div>
+    </div>
+    <!-- end section2  -->
+  </ng-template>
+
+  <!-- add button center  -->
+  <app-add-buttton
+    *ngIf="
+      role === 'CONTRIBUTEUR' ||
+      role === 'EDITEUR' ||
+      role === 'MANAGER' ||
+      role === 'ADMINISTRATEUR'
+    "
+    [buttonText]="'Ajouter un campus'"
+    (click)="addCampus()"
+  ></app-add-buttton>
+</section>

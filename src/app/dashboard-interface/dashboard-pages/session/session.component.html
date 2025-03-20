@@ -1,0 +1,247 @@
+<section>
+  <!-- Afficher un message si aucune session  n'est enregistrée -->
+  <div *ngIf="sessionTotale === 0; else session" class="no-data">
+    <p>Aucune session enregistrée !</p>
+  </div>
+
+  <ng-template #session>
+    <!-- start section1  -->
+    <div class="first-section">
+      <h1>session</h1>
+      <div class="second-bloc">
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ sessionTotale }}</p>
+              <h2>sessions totales</h2>
+            </div>
+            <span><mat-icon>groups</mat-icon></span>
+          </div>
+          <p>{{ dernierElement.dateDebut }}</p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>
+                {{ sessionTotaleFrequently ? sessionTotaleFrequently : "0" }}
+              </p>
+              <h2>sessions ajoutées recemment</h2>
+            </div>
+            <span><mat-icon>groups</mat-icon></span>
+          </div>
+          <p>
+            {{
+              dernierElementRecently
+                ? dernierElementRecently.dateDebut
+                : "Aucune session enregistée récemment"
+            }}
+          </p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ sessionEnCours }}</p>
+              <h2>sessions en cours</h2>
+            </div>
+            <span><mat-icon>groups</mat-icon></span>
+          </div>
+          <p>{{ dernierSessionEnCours.dateDebut }}</p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ sessionCompletees }}</p>
+              <h2>sessions achêvée</h2>
+            </div>
+            <span><mat-icon>groups</mat-icon></span>
+          </div>
+          <p>
+            {{
+              dernierSessionCompletees
+                ? dernierSessionCompletees.dateDebut
+                : "Aucune session achevée"
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- end section1  -->
+
+    <!-- start section2  -->
+    <div class="second-section">
+      <div class="sort">
+        <h2>Rechercher par:</h2>
+
+        <!-- all options  -->
+        <div class="options">
+          <!-- first option  -->
+          <input type="checkbox" name="#" id="check" />
+          <div class="option">
+            <div class="label1">
+              <label for="check"
+                ><mat-icon>calendar_month</mat-icon
+                ><span>Date de debut</span></label
+              >
+            </div>
+            <div class="input1">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  #filterDateDebut
+                  (keyup)="filterByName(filterDateDebut.value)"
+                  name="#"
+                  id="#"
+                  placeholder="Date de debut"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- second option  -->
+          <input type="checkbox" name="#" id="check2" />
+          <div class="option">
+            <div class="label2">
+              <label for="check2"
+                ><mat-icon>mode_standby</mat-icon><span>Statut</span></label
+              >
+            </div>
+            <div class="input2">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  #filterStatuts
+                  (keyup)="filterByStatuts(filterStatuts.value)"
+                  name="#"
+                  id="input2"
+                  placeholder="Statut"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- table of session -->
+      <div class="cards" [@pageTransition]="currentPageState">
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th (click)="sortData('dateDebut')">
+                Date de début <span [ngClass]="getSortIcon('dateDebut')"></span>
+              </th>
+              <th (click)="sortData('statuts')">
+                Statut <span [ngClass]="getSortIcon('statuts')"></span>
+              </th>
+              <th (click)="sortData('campus')">
+                Campus <span [ngClass]="getSortIcon('campus')"></span>
+              </th>
+              <!-- <th (click)="sortData('createDate')">
+                Date d'enregistrement
+                <span [ngClass]="getSortIcon('createDate')"></span>
+              </th> -->
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of currentVisibleData; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td class="startDate">
+                <span>
+                  <img
+                    *ngIf="item.img; else defaultImage"
+                    [src]="'data:image/jpeg;base64,' + item.img.data"
+                    alt="Image session"
+                  />
+                  <ng-template #defaultImage>
+                    <img src="images/unnamed.jpg" alt="unnamed.jpg" />
+                  </ng-template>
+                </span>
+                <span>{{ item.dateDebut }}</span>
+              </td>
+              <td class="session-statut">
+                <span [ngClass]="getStatusClass(item.statuts)"></span>
+                <span>{{ item.statuts }}</span>
+              </td>
+              <td>{{ item.center.name }}</td>
+              <!-- <td>{{ item.createDate | date : "medium" }}</td> -->
+              <td class="more">
+                <button class="more-icon" (click)="toggleModal(i, $event)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <div
+                  class="modal"
+                  [ngClass]="{ show: isModalVisible[i] }"
+                  (click)="$event.stopPropagation()"
+                >
+                  <div class="text">
+                    <button (click)="consulterSession(item.id)">
+                      <img
+                        src="images/eye-svgrepo-com.svg"
+                        alt="eye-svgrepo-com.svg"
+                      />
+                      <span class="view">Consulter</span>
+                    </button>
+                  </div>
+                  <div
+                    *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+                    class="text"
+                  >
+                    <button
+                      matTooltip="Supprimer"
+                      (click)="onOptionSelectedDelete(i, $event, item.id)"
+                    >
+                      <img
+                        src="images/delete-svgrepo-com.svg"
+                        alt="delete-svgrepo-com.svg"
+                      />
+                      <span class="delete">Supprimer</span>
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- pagination  -->
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">
+          Précédent
+        </button>
+        <span *ngFor="let page of pageNumbers()">
+          <button
+            [class.active]="page === currentPage"
+            (click)="changePageWithAnimation(page)"
+          >
+            {{ page }}
+          </button>
+        </span>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage === pageNumbers().length"
+        >
+          Suivant
+        </button>
+      </div>
+    </div>
+    <!-- end section2  -->
+  </ng-template>
+
+  <!-- add button session  -->
+  <app-add-buttton
+    *ngIf="
+      role === 'CONTRIBUTEUR' ||
+      role === 'EDITEUR' ||
+      role === 'MANAGER' ||
+      role === 'ADMINISTRATEUR'
+    "
+    [buttonText]="'Ajouter une session'"
+    (click)="addSession()"
+  ></app-add-buttton>
+</section>
+<ngx-spinner></ngx-spinner>

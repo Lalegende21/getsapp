@@ -1,0 +1,202 @@
+<section>
+  <!-- Afficher un message si aucune session  n'est enregistrée -->
+  <div *ngIf="sessionTotale === 0; else statistique" class="no-data">
+    <p>Aucune statistique à afficher !</p>
+  </div>
+
+  <ng-template #statistique>
+    <h1>statistique</h1>
+
+    <div class="cards">
+      <!-- session  -->
+      <div class="card">
+        <h2>Session</h2>
+        <div class="infos">
+          <div class="info">
+            <p>Session totale</p>
+            <p>{{ sessionTotale }}</p>
+          </div>
+          <div class="info">
+            <p>Session totale en cours</p>
+            <p>{{ sessionEnCours ? sessionEnCours : 0 }}</p>
+          </div>
+          <div class="info">
+            <p>Session totale terminée</p>
+            <p>{{ sessionCompletees ? sessionCompletees : 0 }}</p>
+          </div>
+        </div>
+        <div class="search-bar">
+          <input
+            type="text"
+            placeholder="Rechercher une session..."
+            [(ngModel)]="searchTerm"
+            (input)="filterSessions()"
+          />
+        </div>
+
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th>N°</th>
+                <th>Session</th>
+                <th>Total etudiant</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of paginatedSessions; let i = index">
+                <td>{{ (currentPageSession - 1) * pageSize + i + 1 }}</td>
+                <td>{{ item.dateDebut }}</td>
+                <td>{{ item.studentCount }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- PAGINATION BUTTONS -->
+        <div class="pagination">
+          <button
+            (click)="previousPageSession()"
+            [disabled]="currentPageSession === 1"
+          >
+            Précédent
+          </button>
+          <span>{{ currentPageSession }} / {{ totalPagesSessions }}</span>
+          <button
+            (click)="nextPageSessions()"
+            [disabled]="currentPageSession === totalPagesSessions"
+          >
+            Suivant
+          </button>
+        </div>
+      </div>
+
+      <!-- formation  -->
+      <div class="card">
+        <h2>Formation</h2>
+        <div class="infos">
+          <div class="info">
+            <p>Formation totale</p>
+            <p>{{ formationsTotal }}</p>
+          </div>
+        </div>
+        <div class="search-bar">
+          <input
+            type="text"
+            placeholder="Rechercher une formation..."
+            [(ngModel)]="searchTerm"
+            (input)="filterFormations()"
+          />
+        </div>
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th>N°</th>
+                <th>Formation</th>
+                <th>Total etudiant</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of filteredFormations; let i = index">
+                <td>{{ (currentPageFormation - 1) * pageSize + i + 1 }}</td>
+                <td>{{ item.specialite }}</td>
+                <td>{{ item.studentCount }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- PAGINATION BUTTONS -->
+        <div class="pagination">
+          <button
+            (click)="previousPageFormation()"
+            [disabled]="currentPageFormation === 1"
+          >
+            Précédent
+          </button>
+          <span>{{ currentPageFormation }} / {{ totalPagesFormations }}</span>
+          <button
+            (click)="nextPageFormations()"
+            [disabled]="currentPageFormation === totalPagesFormations"
+          >
+            Suivant
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- finance  -->
+    <div class="finance">
+      <h2>Finance</h2>
+      <div class="infos">
+        <div class="info">
+          <p>Montant total attendu</p>
+          <p id="mt">{{ montantTotal | number }} XAF</p>
+        </div>
+        <div class="info">
+          <p>Montant total payé</p>
+          <p id="mp">{{ montantPaye | number }} XAF</p>
+        </div>
+        <div class="info">
+          <p>Montant total restant</p>
+          <p id="mr">{{ montantRestant | number }} XAF</p>
+        </div>
+      </div>
+
+      <div class="search-bar">
+        <input
+          type="text"
+          placeholder="Rechercher une session..."
+          [(ngModel)]="searchTermFinance"
+          (input)="filterSessionsFinance()"
+        />
+      </div>
+
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Session</th>
+              <th>Montant total</th>
+              <th>Reduction total</th>
+              <th>Montant Payé</th>
+              <th>Montant Restant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of paginatedSessionsFinance; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.dateDebut }}</td>
+              <td>{{ item.totalMontantAttendu | number }} XAF</td>
+              <td>{{ item.totalReduction | number }} XAF</td>
+              <td>{{ item.totalMontantPaye | number }} XAF</td>
+              <td>{{ item.totalMontantRestant | number }} XAF</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PAGINATION BUTTONS -->
+      <div class="pagination">
+        <button
+          (click)="previousPageSessionFinance()"
+          [disabled]="currentPageSessionFinance === 1"
+        >
+          Précédent
+        </button>
+        <span
+          >{{ currentPageSessionFinance }} /
+          {{ totalPagesSessionsFinances }}</span
+        >
+        <button
+          (click)="nextPageSessionsFinance()"
+          [disabled]="currentPageSessionFinance === totalPagesSessionsFinances"
+        >
+          Suivant
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</section>

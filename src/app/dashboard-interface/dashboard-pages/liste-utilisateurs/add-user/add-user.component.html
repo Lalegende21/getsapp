@@ -1,0 +1,112 @@
+<form [formGroup]="addUserForm" (ngSubmit)="addUser()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Enregistrer un utilisateur</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ noms  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Nom</mat-label>
+          <input formControlName="firstname" matInput placeholder="John" />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addUserForm.hasError('required', 'firstname') &&
+            addUserForm.controls['firstname'].touched
+          "
+          >Le nom est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addUserForm.hasError('minlength', 'firstname') &&
+            addUserForm.controls['firstname'].touched
+          "
+          >Le nom doit avoir minimum 3 lettres minimum!</span
+        >
+      </div>
+
+      <!-- Validation du champ prenoms  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Prenom</mat-label>
+          <input formControlName="lastname" matInput placeholder="Doe" />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addUserForm.hasError('required', 'lastname') &&
+            addUserForm.controls['lastname'].touched
+          "
+          >Le prénom est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addUserForm.hasError('minlength', 'lastname') &&
+            addUserForm.controls['lastname'].touched
+          "
+          >Le prénom doit avoir minimum 3 lettres minimum!</span
+        >
+      </div>
+
+      <!-- Validation du champ email  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            formControlName="email"
+            matInput
+            placeholder="Exemple@gmail.com"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addUserForm.hasError('required', 'email') &&
+            addUserForm.controls['email'].touched
+          "
+          >L'email est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addUserForm.hasError('email', 'email') &&
+            addUserForm.controls['email'].touched
+          "
+          >L'email doit avoir minimum 3 lettres minimum!</span
+        >
+      </div>
+
+      <!-- Validation du champ sexe  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Genre</mat-label>
+          <mat-select formControlName="sexe">
+            @for (genders of gender; track genders) {
+            <mat-option [value]="genders.value">{{
+              genders.viewValue
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addUserForm.hasError('required', 'sexe') &&
+            addUserForm.controls['sexe'].touched
+          "
+          >Le sexe est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

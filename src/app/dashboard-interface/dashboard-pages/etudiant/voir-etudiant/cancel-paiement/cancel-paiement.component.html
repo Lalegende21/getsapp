@@ -1,0 +1,34 @@
+<form [formGroup]="cancelPaiementForm" (ngSubmit)="cancelPaiement()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Annuler ce paiement</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ formation  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Liste des paiements</mat-label>
+          <mat-select formControlName="id">
+            <mat-option *ngFor="let item of paiements" [value]="item.id">{{
+              item.typePaiement
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            cancelPaiementForm.hasError('required', 'id') &&
+            cancelPaiementForm.controls['id'].touched
+          "
+          >Le paiement est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

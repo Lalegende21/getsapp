@@ -1,0 +1,107 @@
+<form [formGroup]="addFormationForm" (ngSubmit)="addFormation()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Enregistrer une formation</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ specialite  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Specialite</mat-label>
+          <input
+            formControlName="specialite"
+            matInput
+            placeholder="Fullstack Java"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addFormationForm.hasError('required', 'specialite') &&
+            addFormationForm.controls['specialite'].touched
+          "
+          >Le nom de la spécialité est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addFormationForm.hasError('minlength', 'specialite') &&
+            addFormationForm.controls['specialite'].touched
+          "
+          >Le nom de la spécialité doit avoir minimum 3 lettres!</span
+        >
+      </div>
+
+      <!-- Validation du champ duree  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Duree de formation</mat-label>
+          <input
+            formControlName="periode"
+            matInput
+            type="number"
+            class="example-right-align"
+            placeholder="0"
+          />
+          <span matTextSuffix>mois</span>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addFormationForm.hasError('required', 'periode') &&
+            addFormationForm.controls['periode'].touched
+          "
+          >La période est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ prix  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Prix</mat-label>
+          <input
+            formControlName="price"
+            matInput
+            type="number"
+            placeholder="500000"
+          />
+          <span matTextSuffix>XAF</span>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addFormationForm.hasError('required', 'price') &&
+            addFormationForm.controls['price'].touched
+          "
+          >Le prix de la formation est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ Code formation  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Specificite formation</mat-label>
+          <mat-select formControlName="specificiteFormation">
+            <mat-option *ngFor="let item of specifictes" [value]="item">{{
+              item.code
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addFormationForm.hasError('required', 'specificiteFormation') &&
+            addFormationForm.controls['specificiteFormation'].touched
+          "
+          >La spécialité est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

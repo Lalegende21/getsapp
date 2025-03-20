@@ -1,0 +1,485 @@
+@import "../../../../styles.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+  background-color: $background;
+  padding: 15rem 2rem 5rem 2rem;
+  overflow: auto;
+
+  .no-data {
+    background-color: $white;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      font-weight: 600;
+      font-size: 2rem;
+    }
+  }
+
+  .sort {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 2rem;
+    margin-bottom: 2rem;
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    .options {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      input[type="checkbox"] {
+        opacity: 0;
+      }
+
+      #check:checked ~ .option .label1 {
+        background-color: $logo-color;
+        color: $white;
+      }
+
+      #check:checked ~ .option .input1 {
+        display: block;
+      }
+
+      #check2:checked ~ .option .label2 {
+        background-color: $logo-color;
+        color: $white;
+      }
+
+      #check2:checked ~ .option .input2 {
+        display: block;
+      }
+
+      .option {
+        .label1,
+        .label2 {
+          background-color: $white;
+          padding: 1rem;
+          border: none;
+          border-radius: 0.5rem;
+          box-shadow: 0 0.2rem 0.5rem #ddd;
+          color: $gris-pale;
+          cursor: pointer;
+          transition: all 0.3s;
+
+          label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+
+            span {
+              display: block;
+              font-size: 1.6rem;
+              cursor: pointer;
+            }
+          }
+
+          &:hover {
+            background-color: $bleu-pale;
+            color: $white;
+          }
+        }
+
+        .input1,
+        .input2 {
+          position: absolute;
+          width: 30%;
+          top: 0;
+          left: 0;
+          height: 100%;
+          display: none;
+          transition: all 0.3s;
+
+          div {
+            position: relative;
+
+            input {
+              width: 100%;
+              background-color: $white;
+              padding: 1.5rem 3rem;
+              border: 0.1rem solid $gris-pale;
+              border-radius: 0.4rem;
+              outline: none;
+              font-size: 1.6rem;
+
+              &:focus {
+                border: 0.2rem solid $logo-color;
+              }
+
+              &::placeholder {
+                font-size: 1.6rem;
+                color: $gris-pale;
+              }
+            }
+
+            mat-icon {
+              position: absolute;
+              color: $gris-pale;
+              transform: translate(15%, 50%);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .student {
+    width: 100%;
+    padding: 2rem;
+    background-color: $white;
+    box-shadow: 0 0.5rem 0.5rem #ddd;
+    border-bottom: 4px solid $logo-color;
+
+    .heading {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 2rem;
+      margin-bottom: 4rem;
+
+      h4 {
+        text-transform: capitalize;
+        font-weight: 500;
+        font-size: 3rem;
+        line-height: 4rem;
+      }
+      .getsmarter-prof {
+        text-transform: capitalize;
+        font-size: 1.4rem;
+        color: $gris-pale;
+        margin-left: 0.5rem;
+      }
+
+      // &::after {
+      //   position: absolute;
+      //   content: "";
+      //   height: 0.5rem;
+      //   width: 100%;
+      //   background-color: $secondary;
+      //   // background-color: $logo-color;
+      //   border-radius: 1rem;
+      //   top: 100%;
+      // }
+
+      button {
+        background-color: $logo-color;
+        color: $white;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.2rem 0.5rem #bbb;
+        padding: 1rem 2rem;
+        font-size: 1.6rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+          transform: scale(1.05) translateY(-8%);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+
+    .cards {
+      position: relative;
+      width: 100%;
+      border-radius: 0.5rem;
+      max-width: 100%;
+
+      table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+
+        th {
+          padding: 1rem;
+          background-color: $background;
+          font-size: 1.8rem;
+          font-weight: 500;
+
+          .arrow-up::after {
+            content: "▲";
+            color: $logo-color;
+          }
+
+          .arrow-down::after {
+            content: "▼";
+            color: $logo-color;
+          }
+        }
+
+        tr {
+          transition: all 0.2s;
+          &:hover {
+            background-color: rgba(172, 189, 206, 0.5);
+          }
+        }
+
+        td {
+          font-size: 1.5rem;
+          padding: 1rem 0;
+
+          mat-icon {
+            color: $logo-color;
+          }
+        }
+
+        .startDate {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 2rem;
+
+          span:first-child {
+            display: block;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 100%;
+            overflow: hidden;
+            box-shadow: 0 0 0.4rem #ccc;
+
+            img {
+              height: 100%;
+              width: 100%;
+              object-fit: cover;
+            }
+          }
+
+          span:last-child {
+            display: block;
+          }
+        }
+
+        .more {
+          position: relative;
+
+          .more-icon {
+            background-color: $background;
+            border-radius: 100%;
+            padding: 0.3rem;
+            border: none;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          .modal {
+            position: absolute;
+            z-index: 10;
+            border-radius: 0.5rem;
+            background-color: $white;
+            box-shadow: 0 0.5rem 0.5rem #ddd;
+            display: none;
+            transition: opacity 0.2s;
+
+            .text {
+              button {
+                background-color: transparent;
+                border: none;
+                padding: 1rem 2rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                cursor: pointer;
+
+                img {
+                  width: 2rem;
+                  transition: all 0.2s ease-in;
+
+                  &:hover {
+                    transform: scale(1.2);
+                  }
+                }
+
+                span {
+                  font-size: 1.5rem;
+                  text-wrap: nowrap;
+                }
+              }
+
+              .update {
+                color: $logo-color;
+              }
+              .delete {
+                color: $danger;
+              }
+
+              &:hover {
+                background-color: $background;
+              }
+            }
+          }
+        }
+
+        .more .modal.show {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .pagination {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .focus {
+      font-size: 1.5rem;
+      border: 0.1rem solid $logo-color;
+      color: $logo-color;
+    }
+
+    button {
+      display: block;
+      padding: 1rem 2rem;
+      margin: 0 0.5rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 0.4rem #ddd;
+      background-color: $white;
+      color: $logo-color;
+
+      &:first-child,
+      &:last-child {
+        margin: 0 1rem;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          background-color: $logo-color;
+          color: $white;
+        }
+      }
+    }
+  }
+
+  .pagination button.active {
+    font-weight: bold;
+    color: #fff;
+    background-color: $logo-color;
+    border: none;
+  }
+}
+
+@media screen and (max-width: 1445px) {
+  section {
+    .student {
+      .cards {
+        overflow: auto;
+
+        table {
+          min-width: 760px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  section {
+    .sort {
+      flex-direction: column;
+      align-items: end;
+
+      h2 {
+        width: 100%;
+        text-align: center;
+      }
+
+      .options {
+        .option {
+          .input1,
+          .input2 {
+            transform: translateY(50%);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1025px) {
+  section {
+    .student {
+      margin-top: 4rem;
+      width: 100%;
+      .heading {
+        h4 {
+          font-size: 2rem;
+        }
+      }
+
+      .cards {
+        table {
+          .more {
+            .modal {
+              left: -80%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  section {
+    .sort {
+      align-items: center;
+
+      .options {
+        margin-bottom: 4rem;
+        .option {
+          .input1,
+          .input2 {
+            transform: translateY(0);
+            top: 80%;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 490px) {
+  section {
+    .student {
+      .heading {
+        flex-direction: column;
+        text-align: center;
+        gap: 4rem;
+
+        button {
+          span {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

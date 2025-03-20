@@ -1,0 +1,243 @@
+<form [formGroup]="addStudentForm" (ngSubmit)="addStudent()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Enregistrer un etudiant</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ noms  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Nom</mat-label>
+          <input formControlName="firstname" matInput placeholder="John" />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('required', 'firstname') &&
+            addStudentForm.controls['firstname'].touched
+          "
+          >Le nom est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('minlength', 'firstname') &&
+            addStudentForm.controls['firstname'].touched
+          "
+          >Le nom doit avoir minimum 3 lettres minimum!</span
+        >
+      </div>
+
+      <!-- Validation du champ prenoms  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Prenom</mat-label>
+          <input formControlName="lastname" matInput placeholder="Doe" />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('required', 'lastname') &&
+            addStudentForm.controls['lastname'].touched
+          "
+          >Le prénom est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('minlength', 'lastname') &&
+            addStudentForm.controls['lastname'].touched
+          "
+          >Le prénom doit avoir minimum 3 lettres minimum!</span
+        >
+      </div>
+
+      <!-- Validation du champ email  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            formControlName="email"
+            matInput
+            placeholder="Exemple@gmail.com"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('required', 'email') &&
+            addStudentForm.controls['email'].touched
+          "
+          >L'email est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('email', 'email') &&
+            addStudentForm.controls['email'].touched
+          "
+          >L'email doit avoir minimum 3 lettres minimum!</span
+        >
+      </div>
+
+      <!-- Validation du champ numero de telephone  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Numéro de téléphone</mat-label>
+          <input
+            formControlName="phonenumber"
+            matInput
+            placeholder="653432424"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('required', 'phonenumber') &&
+            addStudentForm.controls['phonenumber'].touched
+          "
+          >Le numéro de téléphone est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('pattern', 'phonenumber') &&
+            addStudentForm.controls['phonenumber'].touched
+          "
+          >Le numéro de téléphone ne doit contenir que des chiffres!</span
+        >
+      </div>
+
+      <!-- Validation du champ dob  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Date de naissance</mat-label>
+          <input formControlName="dob" matInput [matDatepicker]="picker" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('required', 'dob') &&
+            addStudentForm.controls['dob'].touched
+          "
+          >La date de naissance est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ sexe  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Genre</mat-label>
+          <mat-select formControlName="sexe">
+            @for (genders of gender; track genders) {
+            <mat-option [value]="genders.value">{{
+              genders.viewValue
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('required', 'sexe') &&
+            addStudentForm.controls['sexe'].touched
+          "
+          >Le sexe est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ horaire  -->
+      <div>
+        <mat-form-field>
+          <mat-label>horaire</mat-label>
+          <mat-select formControlName="horaire">
+            @for (horaires of horaire; track horaires) {
+            <mat-option [value]="horaires.value">{{
+              horaires.viewValue
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('required', 'horaire') &&
+            addStudentForm.controls['horaire'].touched
+          "
+          >L'horaire est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ formation  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Formation</mat-label>
+          <mat-select formControlName="formation">
+            <mat-option *ngFor="let item of formation" [value]="item">{{
+              item.specialite
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('required', 'formation') &&
+            addStudentForm.controls['formation'].touched
+          "
+          >La formation est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ centre  -->
+      <!-- <div>
+        <mat-form-field>
+          <mat-label>Campus</mat-label>
+          <mat-select formControlName="center">
+            <mat-option *ngFor="let item of center" [value]="item">{{
+              item.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('required', 'center') &&
+            addStudentForm.controls['center'].touched
+          "
+          >Le centre est obligatoire!</span
+        >
+      </div> -->
+
+      <!-- Validation du champ session  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Session</mat-label>
+          <mat-select formControlName="session">
+            <mat-option *ngFor="let item of session" [value]="item">{{
+              item.dateDebut
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addStudentForm.hasError('required', 'session') &&
+            addStudentForm.controls['session'].touched
+          "
+          >La session est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

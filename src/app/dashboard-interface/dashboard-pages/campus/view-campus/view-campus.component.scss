@@ -1,0 +1,284 @@
+@import "../../../../../styles.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+  background-color: $background;
+  padding: 15rem 2rem 5rem 2rem;
+  overflow: auto;
+
+  .container {
+    display: flex;
+    align-items: start;
+    gap: 8rem;
+
+    .card-style {
+      width: 100%;
+      background-color: $white;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      box-shadow: 0 0.5rem 0.5rem #ddd;
+      border-bottom: 4px solid $logo-color;
+      margin-bottom: 4rem;
+
+      .heading {
+        position: relative;
+        padding-bottom: 2rem;
+        margin-bottom: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h1 {
+          font-size: 2rem;
+          font-weight: 500;
+          color: $logo-color;
+        }
+
+        .image {
+          width: 6rem;
+          height: 6rem;
+          background-color: gold;
+          border: .1rem solid black;
+          // border: 0.1rem solid #ccc;
+          margin-bottom: 2rem;
+          // overflow: hidden;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        &::after {
+          position: absolute;
+          content: "";
+          height: 0.5rem;
+          width: 100%;
+          background-color: $secondary;
+          border-radius: 1rem;
+          top: 100%;
+        }
+      }
+
+      .subheading {
+        font-size: 1.4rem;
+        div {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 2rem;
+
+          p {
+            color: $gris-pale;
+          }
+          h6 {
+            font-size: 1.6rem;
+            color: $primary;
+          }
+        }
+      }
+    }
+
+    .btn-update {
+      background-color: $logo-color;
+      color: $white;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      box-shadow: 0 0.2rem 0.5rem #bbb;
+      padding: 1rem 2rem;
+      font-size: 1.6rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        transform: scale(1.05) translateY(-8%);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    .student {
+      width: 40%;
+
+      .infos-student {
+        background-color: $white;
+        border-radius: 0.5rem;
+        padding: 2rem;
+        box-shadow: 0 0.5rem 0.5rem #ddd;
+        border-bottom: 4px solid $logo-color;
+        margin-bottom: 4rem;
+
+        .img {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 2rem;
+
+          .image {
+            height: 40rem;
+            width: 40rem;
+            // overflow: hidden;
+            margin: auto;
+
+            img {
+              height: 100%;
+              width: 100%;
+              border-radius: 2rem;
+              box-shadow: 0 0 0.5rem #bbb;
+            }
+          }
+
+          form {
+            input {
+              display: none;
+            }
+
+            .custom-file-upload {
+              background-color: $logo-color;
+              color: $white;
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+              border: none;
+              border-radius: 0.5rem;
+              box-shadow: 0 0.2rem 0.5rem #bbb;
+              padding: 1rem 2rem;
+              font-size: 1.6rem;
+              font-weight: 500;
+              cursor: pointer;
+              transition: all 0.3s;
+
+              &:hover {
+                transform: scale(1.05) translateY(-8%);
+              }
+
+              &:active {
+                transform: translateY(0);
+              }
+            }
+          }
+        }
+
+        .update {
+          display: flex;
+          justify-content: center;
+          margin-top: 4rem;
+        }
+      }
+    }
+
+    .session {
+      width: 100%;
+
+      .subheading {
+        margin-top: 4rem;
+
+        div {
+          margin: 2rem 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          p {
+            color: $gris-pale;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-transform: capitalize;
+            font-size: 1.4rem;
+          }
+
+          h4 {
+            font-weight: 500;
+            font-size: 1.6rem;
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+
+  //Style de la fleche de retour
+  .back {
+    position: absolute;
+    top: 10%;
+    left: 1%;
+
+    button {
+      color: $logo-color;
+      padding: 0.1rem 1rem;
+      background-color: $white;
+      border-radius: 0.5rem;
+      border: none;
+      box-shadow: 0 0 0.3rem $gris-pale;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: $secondary;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1470px) {
+  section {
+    .container {
+      gap: 4rem;
+    }
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  section {
+    .container {
+      flex-direction: column;
+
+      .student {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 395px) {
+  section {
+    .container {
+      .student {
+        .infos-student,
+        .reduction {
+          .subheading {
+            div {
+              flex-direction: column;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 340px) {
+  section {
+    .container {
+      .card-style {
+        .heading {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+
+      .btn-update {
+        padding: 1rem;
+      }
+    }
+  }
+}

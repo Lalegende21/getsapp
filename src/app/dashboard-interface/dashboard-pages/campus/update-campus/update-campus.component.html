@@ -1,0 +1,72 @@
+<form [formGroup]="updateCampusForm" (ngSubmit)="UpdateCampus()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Enregistrer un campus</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ noms  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Nom du campus</mat-label>
+          <input
+            formControlName="name"
+            [(ngModel)]="name"
+            matInput
+            placeholder="Campus 1"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateCampusForm.hasError('required', 'name') &&
+            updateCampusForm.controls['name'].touched
+          "
+          >Le nom du campus est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            updateCampusForm.hasError('minlength', 'name') &&
+            updateCampusForm.controls['name'].touched
+          "
+          >Le nom du campus doit avoir minimum 3 lettres minimum!</span
+        >
+      </div>
+
+      <!-- Validation du champ localisation  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Localisation</mat-label>
+          <input
+            formControlName="localisation"
+            [(ngModel)]="localisation"
+            matInput
+            placeholder="Logpom"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateCampusForm.hasError('required', 'localisation') &&
+            updateCampusForm.controls['localisation'].touched
+          "
+          >La localisation du campus est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            updateCampusForm.hasError('minlength', 'localisation') &&
+            updateCampusForm.controls['localisation'].touched
+          "
+          >La localisation du campus doit avoir 3 lettres minimum!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

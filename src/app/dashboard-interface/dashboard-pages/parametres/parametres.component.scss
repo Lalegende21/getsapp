@@ -1,0 +1,73 @@
+@import "../../../../styles.scss";
+
+section {
+  height: 100%;
+  width: 100%;
+  background-color: $background;
+  padding: 15rem 2rem 5rem 2rem;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .cards {
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+
+    .card {
+      width: 100%;
+
+      button {
+        display: block;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        background-color: $white;
+        border: none;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.2rem 0.5rem #bbb;
+        padding: 2rem;
+        font-size: 1.6rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+          background-color: $primary;
+          transform: scale(1.05) translateY(-8%);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        mat-icon {
+          color: $danger;
+        }
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 1000px) {
+    section {
+        .cards {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 630px) {
+    section {
+        display: block;
+        .cards {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+}

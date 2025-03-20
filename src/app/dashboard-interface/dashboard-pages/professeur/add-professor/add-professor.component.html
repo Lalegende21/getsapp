@@ -1,0 +1,126 @@
+<form [formGroup]="addProfessorForm" (ngSubmit)="addProfessor()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Enregistrer un professeur</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ noms  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Nom complet du professeur</mat-label>
+          <input formControlName="fullname" matInput placeholder="John Doe" />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addProfessorForm.hasError('required', 'fullname') &&
+            addProfessorForm.controls['fullname'].touched
+          "
+          >Le nom du professeur est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addProfessorForm.hasError('minlength', 'fullname') &&
+            addProfessorForm.controls['fullname'].touched
+          "
+          >Le nom du professeur doit avoir minimum 3 lettres!</span
+        >
+      </div>
+
+      <!-- Validation du champ Identifiant CNI  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Identifiant CNI</mat-label>
+          <input
+            formControlName="cni"
+            matInput
+            placeholder="20243125786534780"
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- Validation du champ Identifiant CNI  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            formControlName="email"
+            matInput
+            placeholder="johndoe@gmail.com"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addProfessorForm.hasError('required', 'email') &&
+            addProfessorForm.controls['email'].touched
+          "
+          >L'email' est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addProfessorForm.hasError('pattern', 'email') &&
+            addProfessorForm.controls['email'].touched
+          "
+          >L'email est invalide!</span
+        >
+      </div>
+
+      <!-- Validation du champ numero de telephone  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Numero telephone</mat-label>
+          <input
+            formControlName="phoneNumber"
+            matInput
+            placeholder="670834210"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addProfessorForm.hasError('required', 'phoneNumber') &&
+            addProfessorForm.controls['phoneNumber'].touched
+          "
+          >Le numéro de téléphone est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addProfessorForm.hasError('pattern', 'phoneNumber') &&
+            addProfessorForm.controls['phoneNumber'].touched
+          "
+          >Le numéro de téléphone est invalide!</span
+        >
+      </div>
+
+      <!-- Validation du champ sexe  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Sexe</mat-label>
+          <mat-select formControlName="sexe">
+            @for (sexe of sexe; track sexe) {
+            <mat-option [value]="sexe.value">{{ sexe.viewValue }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addProfessorForm.hasError('required', 'sexe') &&
+            addProfessorForm.controls['sexe'].touched
+          "
+          >Le sexe est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

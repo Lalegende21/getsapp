@@ -1,0 +1,61 @@
+<form [formGroup]="addStudentToTutorForm" (ngSubmit)="addStudentToTutor()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Ajouter un étudiant au tuteur</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Champ de recherche -->
+      <mat-form-field>
+        <mat-label>Rechercher un étudiant</mat-label>
+        <input
+          matInput
+          (input)="onSearch($event)"
+          placeholder="Rechercher..."
+        />
+      </mat-form-field>
+
+      <!-- Sélection de l'étudiant -->
+      <mat-form-field>
+        <mat-label>Étudiant</mat-label>
+        <mat-select formControlName="student">
+          <mat-option *ngFor="let item of filteredStudents" [value]="item">
+            {{ item.firstname + " " + item.lastname }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()" type="button">Annuler</button>
+    </div>
+  </mat-card>
+</form>
+
+<!-- <form [formGroup]="addStudentToTutorForm" (ngSubmit)="addStudentToTutor()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Ajouter un etudiant au tuteur</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      Validation du champ etudiant 
+      <div>
+        <mat-form-field>
+          <mat-label>Etudiant</mat-label>
+          <mat-select formControlName="student">
+            <mat-option *ngFor="let item of filteredStudents" [value]="item">
+              {{ item.firstname + " " + item.lastname }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form> -->

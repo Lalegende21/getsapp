@@ -1,0 +1,88 @@
+<section>
+  <div class="paiement">
+    <div class="heading">
+      <h1>JavaScript</h1>
+      <button
+        *ngIf="
+          role === 'EDITEUR' || role === 'MANAGER' || role === 'ADMINISTRATEUR'
+        "
+        (click)="updateStartCourse()"
+      >
+        <mat-icon>edit</mat-icon>
+        <!-- <span>Modifier</span> -->
+      </button>
+    </div>
+    <div class="subheading">
+      <div>
+        <p>Matière</p>
+        <h6>
+          <span>{{ course ? course : "Null" }}</span>
+        </h6>
+      </div>
+      <div>
+        <p>Durée de cours</p>
+        <h6>
+          <span>{{ duree ? duree : "0" }}</span> semaine(s)
+        </h6>
+      </div>
+      <div>
+        <p>Nom du professeur</p>
+        <h6>
+          <span>{{ professor ? professor : "Null" }}</span>
+        </h6>
+      </div>
+      <div>
+        <p>Statut</p>
+        <h6>
+          <span>{{ statut ? statut : "Null" }}</span>
+        </h6>
+      </div>
+      <div>
+        <p>Session</p>
+        <h6>
+          <span>{{ session ? session : "Null" }}</span>
+        </h6>
+      </div>
+      <div>
+        <p>Horaire</p>
+        <h6>
+          <span>{{ horaire ? horaire : "Null" }}</span>
+        </h6>
+      </div>
+      <div class="mtp">
+        <p>Date de debut du cours</p>
+        <h6>
+          <span>{{ startDate ? startDate : "Null" }}</span>
+        </h6>
+      </div>
+      <div class="mrp">
+        <p>Date de fin du cours</p>
+        <h6>
+          <span>{{ endDate ? endDate : "Null" }}</span>
+        </h6>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="
+      role === 'EDITEUR' ||
+      role === 'MANAGER' ||
+      role === 'ADMINISTRATEUR'
+    "
+    class="cancel"
+  >
+    <button
+      [disabled]="statut == 'TERMINER'"
+      (click)="cancelStatutStartCourse()"
+    >
+      <mat-icon>power_settings_new</mat-icon>
+      <span>Desactiver statut</span>
+    </button>
+  </div>
+
+  <div class="back">
+    <button (click)="backPage()">
+      <mat-icon>west</mat-icon>
+    </button>
+  </div>
+</section>

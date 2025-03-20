@@ -1,0 +1,127 @@
+<section>
+  <!-- start section1  -->
+  <div class="first-section">
+    <div class="first-bloc">
+      <div class="text">
+        <h4>
+          Bienvenu(e) <span>{{ fullname }}</span>
+          <img
+            src="images/party-popper-svgrepo-com.svg"
+            alt="party-popper-svgrepo-com"
+          />
+        </h4>
+        <p>Gerer Vos operations en toute simplicite.</p>
+      </div>
+      <div class="image">
+        <img
+          src="images/man-with-laptop-light.png"
+          alt="man-with-laptop-light"
+        />
+      </div>
+    </div>
+    <div class="second-bloc">
+      <div class="card">
+        <div class="title">
+          <div>
+            <p>{{ totalSession ? totalSession : 0 }}</p>
+            <h2>sessions</h2>
+          </div>
+          <span><mat-icon>groups</mat-icon></span>
+        </div>
+        <p>{{ lastSession ? lastSession.dateDebut : "Aucune session" }}</p>
+      </div>
+      <div class="card">
+        <div class="title">
+          <div>
+            <p>{{ totalStudent ? totalStudent : 0 }}</p>
+            <h2>etudiants</h2>
+          </div>
+          <span><mat-icon>face</mat-icon></span>
+        </div>
+        <p>
+          {{
+            lastStudent
+              ? lastStudent.firstname + " " + lastStudent.lastname
+              : "Aucun étudiant"
+          }}
+        </p>
+      </div>
+      <div class="card">
+        <div class="title">
+          <div>
+            <p>{{ totalFormation ? totalFormation : 0 }}</p>
+            <h2>formations</h2>
+          </div>
+          <span><mat-icon>school</mat-icon></span>
+        </div>
+        <p>
+          {{ lastFormation ? lastFormation.specialite : "Aucune formation" }}
+        </p>
+      </div>
+      <div class="card">
+        <div class="title">
+          <div>
+            <p>{{ totalCenter ? totalCenter : 0 }}</p>
+            <h2>campus</h2>
+          </div>
+          <span><mat-icon>apartment</mat-icon></span>
+        </div>
+        <p>{{ lastCenter ? lastCenter.name : "Aucun campus" }}</p>
+      </div>
+      <div class="card">
+        <div class="title">
+          <div>
+            <p>{{ totalCourse ? totalCourse : 0 }}</p>
+            <h2>matieres</h2>
+          </div>
+          <span><mat-icon>book</mat-icon></span>
+        </div>
+        <p>{{ lastCourse ? lastCourse.name : "Aucune matière" }}</p>
+      </div>
+      <div class="card">
+        <div class="title">
+          <div>
+            <p>{{ totalProfessors ? totalProfessors : 0 }}</p>
+            <h2>professeurs</h2>
+          </div>
+          <span><mat-icon>person_3</mat-icon></span>
+        </div>
+        <p>{{ lastProfessor ? lastProfessor.fullname : "Aucun professeur" }}</p>
+      </div>
+    </div>
+  </div>
+  <!-- end section1  -->
+
+  <!-- start section2  -->
+  <div class="second-section">
+    <div class="diagramme">
+      <div id="chartStudent" class="chart">
+        <apx-chart
+          [series]="chartOptionsStudent.series"
+          [chart]="chartOptionsStudent.chart"
+          [xaxis]="chartOptionsStudent.xaxis"
+          [stroke]="chartOptionsStudent.stroke"
+          [tooltip]="chartOptionsStudent.tooltip"
+          [dataLabels]="chartOptionsStudent.dataLabels"
+        ></apx-chart>
+      </div>
+    </div>
+    <div class="calendar">
+      <mat-calendar ngSkipHydration></mat-calendar>
+    </div>
+    <div class="notifications">
+      <div id="chartPaiement" class="chart">
+        <apx-chart
+          [series]="chartOptionsPaiement.series"
+          [chart]="chartOptionsPaiement.chart"
+          [xaxis]="chartOptionsPaiement.xaxis"
+          [stroke]="chartOptionsPaiement.stroke"
+          [tooltip]="chartOptionsPaiement.tooltip"
+          [dataLabels]="chartOptionsPaiement.dataLabels"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+  <!-- start section2  -->
+</section>
+<ngx-spinner></ngx-spinner>

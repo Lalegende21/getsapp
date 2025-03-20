@@ -1,0 +1,115 @@
+<form [formGroup]="updateFormationForm" (ngSubmit)="updateFormation()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Enregistrer une formation</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ specialite  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Specialite</mat-label>
+          <input
+            [(ngModel)]="specialite"
+            formControlName="specialite"
+            matInput
+            placeholder="Fullstack Java"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateFormationForm.hasError('required', 'specialite') &&
+            updateFormationForm.controls['specialite'].touched
+          "
+          >Le nom de la spécialité est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            updateFormationForm.hasError('minlength', 'specialite') &&
+            updateFormationForm.controls['specialite'].touched
+          "
+          >Le nom de la spécialité doit avoir minimum 3 lettres!</span
+        >
+      </div>
+
+      <!-- Validation du champ duree  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Duree de formation</mat-label>
+          <input
+            [(ngModel)]="periode"
+            formControlName="periode"
+            matInput
+            type="number"
+            class="example-right-align"
+            placeholder="0"
+          />
+          <span matTextSuffix>mois</span>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateFormationForm.hasError('required', 'periode') &&
+            updateFormationForm.controls['periode'].touched
+          "
+          >La période est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ prix  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Prix</mat-label>
+          <input
+            [(ngModel)]="price"
+            formControlName="price"
+            matInput
+            type="number"
+            placeholder="500000"
+          />
+          <span matTextSuffix>XAF</span>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateFormationForm.hasError('required', 'price') &&
+            updateFormationForm.controls['price'].touched
+          "
+          >Le prix de la formation est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ Code formation  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Specificite formation</mat-label>
+          <mat-select
+            formControlName="specificiteFormation"
+            [(ngModel)]="code"
+          >
+            @for (item of specifictes; track item) {
+            <mat-option [value]="item">{{
+              item.code
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateFormationForm.hasError('required', 'specificiteFormation') &&
+            updateFormationForm.controls['specificiteFormation'].touched
+          "
+          >La spécificité est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

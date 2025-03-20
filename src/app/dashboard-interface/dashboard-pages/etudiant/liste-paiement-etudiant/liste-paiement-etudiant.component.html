@@ -1,0 +1,90 @@
+<section>
+  <div class="background-container">
+    <h1>Liste des paiements</h1>
+  </div>
+
+  <!-- Afficher un message si aucun paiement n'est enregistré -->
+  <div *ngIf="paiements?.length === 0; else paiementList" class="no-data">
+    <p>Aucun paiement enregistré.</p>
+  </div>
+
+  <!-- Liste des paiements -->
+  <ng-template #paiementList>
+    <div class="cards">
+      <div class="card" *ngFor="let paiement of paiements; let i = index">
+        <div class="text">
+          <div class="heading">
+            <div>
+              <h4>
+                {{
+                  paiement.student.firstname + " " + paiement.student.lastname
+                }}
+              </h4>
+              <span class="getsmarter-prof">Paiement</span>
+            </div>
+            <button (click)="updatePaiement(paiement.id, paiement.student)">
+              <mat-icon>edit</mat-icon>
+              <span>Modifier</span>
+            </button>
+          </div>
+
+          <div class="subheading">
+            <div>
+              <p><mat-icon>key</mat-icon> Matricule</p>
+              <h4>{{ paiement.student.matricule }}</h4>
+            </div>
+            <div>
+              <p><mat-icon>receipt_long</mat-icon> Type de paiement</p>
+              <h4>{{ paiement.typePaiement }}</h4>
+            </div>
+            <div>
+              <p><mat-icon>paid</mat-icon> Montant total</p>
+              <h4>
+                {{
+                  paiement.student.montantTotal
+                    ? paiement.student.montantTotal
+                    : "0"
+                }}
+                XAF
+              </h4>
+            </div>
+            <div>
+              <p><mat-icon>loyalty</mat-icon> Réduction</p>
+              <h4>
+                {{
+                  paiement.student.reduction ? paiement.student.reduction : "0"
+                }}
+                XAF
+              </h4>
+            </div>
+            <div>
+              <p><mat-icon>paid</mat-icon> Montant total après réduction</p>
+              <h4>
+                {{
+                  paiement.student.montantAfterReduction
+                    ? paiement.student.montantAfterReduction
+                    : "0"
+                }}
+                XAF
+              </h4>
+            </div>
+            <div>
+              <p><mat-icon>paid</mat-icon> Montant payé</p>
+              <h4 class="mp">{{ paiement.amount ? paiement.amount : "0" }} XAF</h4>
+            </div>
+            <div>
+              <p><mat-icon>event_note</mat-icon> Date du paiement</p>
+              <h4>{{ paiement.createDate | date : "medium" }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <div class="back">
+    <button (click)="backPage()">
+      <mat-icon>west</mat-icon>
+    </button>
+  </div>
+</section>

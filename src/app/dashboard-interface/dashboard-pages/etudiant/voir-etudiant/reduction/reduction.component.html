@@ -1,0 +1,45 @@
+<div class="container">
+  <div mat-dialog-title>
+    <h1>Reduction sur le montant total de la formation</h1>
+  </div>
+
+  <form [formGroup]="reductionForm" (ngSubmit)="getReduction()">
+    <div mat-dialog-content>
+      <div class="text">
+        <p>
+          Vous êtes sur le point de vouloir accordez une reduction à l'étudiant
+          <span>{{ firstname + " " + lastname }}</span> concernant sa spécialité
+          <span>{{ specialite }}</span> dont le montant total s'élève à
+          <span>{{ montantTotal }}</span> XAF.
+        </p>
+        <div class="form">
+          <mat-form-field>
+            <mat-label
+              >Combien souhaitez-vous retrancher du montant total?</mat-label
+            >
+            <input
+              formControlName="amount"
+              matInput
+              type="number"
+              placeholder="50000"
+            />
+            <span matTextSuffix>XAF</span>
+          </mat-form-field>
+          <span
+            class="error"
+            *ngIf="
+              reductionForm.hasError('required', 'amount') &&
+              reductionForm.controls['amount'].touched
+            "
+            >Le montant est obligatoire!</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div mat-dialog-actions class="button">
+      <button mat-raised-button (click)="closeDialog()">Annuler</button>
+      <button type="submit">Enregistrer</button>
+    </div>
+  </form>
+</div>

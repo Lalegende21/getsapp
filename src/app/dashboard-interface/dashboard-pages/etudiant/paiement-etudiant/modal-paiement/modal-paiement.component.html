@@ -1,0 +1,25 @@
+<div class="container">
+  <div mat-dialog-title>
+    <img
+      src="images/check-form-circle-svgrepo-com.svg"
+      alt="check-circle-svgrepo-com.svg"
+    />
+  </div>
+
+  <div mat-dialog-content>
+    <div class="text">
+      <h2>Confirmation du paiement!</h2>
+      <p>
+        Vous etes sur le point d'enregistrer le paiement de l'etudiant(e)
+        <span>{{ firstname + " " + lastname }}</span> concernant
+        <span>{{ typePaiement }}</span> pour un montant de
+        <span>{{ amount }}</span> XAF.
+      </p>
+    </div>
+
+    <div mat-dialog-actions class="button">
+      <button mat-raised-button (click)="closeDialog()">Annuler</button>
+      <button mat-raised-button (click)="confirm()">Confirmer</button>
+    </div>
+  </div>
+</div>

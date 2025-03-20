@@ -1,0 +1,99 @@
+<form
+  [formGroup]="updateStudentFormationForm"
+  (ngSubmit)="updateStudentFormation()"
+>
+  <mat-card>
+    <mat-card-header>
+      <h1>Modifier cet etudiant</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ horaire  -->
+      <div>
+        <mat-form-field>
+          <mat-label>horaire</mat-label>
+          <mat-select formControlName="horaire">
+            @for (horaires of horaire; track horaires) {
+            <mat-option [value]="horaires.value">{{
+              horaires.viewValue
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateStudentFormationForm.hasError('required', 'horaire') &&
+            updateStudentFormationForm.controls['horaire'].touched
+          "
+          >L'horaire est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ formation  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Formation</mat-label>
+          <mat-select formControlName="formation">
+            <mat-option *ngFor="let item of allFormation" [value]="item">{{
+              item.specialite
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateStudentFormationForm.hasError('required', 'formation') &&
+            updateStudentFormationForm.controls['formation'].touched
+          "
+          >La formation est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ centre  -->
+      <!-- <div>
+        <mat-form-field>
+          <mat-label>Campus</mat-label>
+          <mat-select formControlName="center">
+            <mat-option *ngFor="let item of allCenter" [value]="item">{{
+              item.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateStudentFormationForm.hasError('required', 'center') &&
+            updateStudentFormationForm.controls['center'].touched
+          "
+          >Le centre est obligatoire!</span
+        >
+      </div> -->
+
+      <!-- Validation du champ session  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Session</mat-label>
+          <mat-select formControlName="session">
+            <mat-option *ngFor="let item of allSession" [value]="item">{{
+              item.dateDebut
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateStudentFormationForm.hasError('required', 'session') &&
+            updateStudentFormationForm.controls['session'].touched
+          "
+          >La session est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

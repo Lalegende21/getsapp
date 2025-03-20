@@ -1,0 +1,156 @@
+<mat-stepper [linear]="true" #stepper>
+  <!-- formulaire 1  -->
+  <mat-step [stepControl]="firstFormGroup" [completed]="isStepCompleted(0)">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Session</ng-template>
+      <div class="card">
+        <h1>Selectionner la session</h1>
+        <mat-form-field appearance="outline">
+          <mat-label>Rechercher une session</mat-label>
+          <input
+            matInput
+            (input)="onSearchSession($event)"
+            placeholder="Rechercher..."
+          />
+        </mat-form-field>
+
+        <!-- Sélection de la session -->
+        <mat-form-field appearance="outline">
+          <mat-label>Session</mat-label>
+          <mat-select formControlName="session">
+            <mat-option *ngFor="let item of filteredSessions" [value]="item">
+              {{ item.dateDebut }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="btn">
+        <button class="next" matStepperNext [disabled]="firstFormGroup.invalid">
+          Suivant
+        </button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- formulaire 2  -->
+  <mat-step
+    [stepControl]="secondFormGroup"
+    label="Matière"
+    [completed]="isStepCompleted(1)"
+  >
+    <form [formGroup]="secondFormGroup">
+      <div class="card">
+        <h1>Selectionner la matière</h1>
+        <mat-form-field appearance="outline">
+          <mat-label>Rechercher une matière</mat-label>
+          <input
+            matInput
+            (input)="onSearchCourse($event)"
+            placeholder="Rechercher..."
+          />
+        </mat-form-field>
+
+        <!-- Sélection de la matiere -->
+        <mat-form-field appearance="outline">
+          <mat-label>Matière</mat-label>
+          <mat-select formControlName="course">
+            <mat-option *ngFor="let item of filteredCourse" [value]="item">
+              {{ item.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="btn">
+        <button class="back" matStepperPrevious>précédent</button>
+        <button
+          class="next"
+          matStepperNext
+          [disabled]="secondFormGroup.invalid"
+        >
+          Suivant
+        </button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- formulaire 3  -->
+  <mat-step
+    [stepControl]="thirdFormGroup"
+    label="Professeur"
+    [completed]="isStepCompleted(2)"
+  >
+    <form [formGroup]="thirdFormGroup">
+      <div class="card">
+        <h1>Selectionner le professeur</h1>
+        <mat-form-field appearance="outline">
+          <mat-label>Rechercher un professeur</mat-label>
+          <input
+            matInput
+            (input)="onSearchProfessor($event)"
+            placeholder="Rechercher..."
+          />
+        </mat-form-field>
+
+        <!-- Sélection de le professor -->
+        <mat-form-field appearance="outline">
+          <mat-label>Professeur</mat-label>
+          <mat-select formControlName="professor">
+            <mat-option *ngFor="let item of filteredProfessor" [value]="item">
+              {{ item.fullname }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="btn">
+        <button class="back" matStepperPrevious>précédent</button>
+        <button class="next" matStepperNext [disabled]="thirdFormGroup.invalid">
+          Suivant
+        </button>
+      </div>
+    </form>
+  </mat-step>
+
+  <!-- formulaire 4  -->
+  <mat-step
+    [stepControl]="fourthFormGroup"
+    label="Horaire"
+    [completed]="isStepCompleted(3)"
+  >
+    <form [formGroup]="fourthFormGroup">
+      <div class="card">
+        <h1>Selectionner la période</h1>
+
+        <mat-form-field appearance="outline">
+          <mat-label>horaire</mat-label>
+          <mat-select formControlName="horaire">
+            @for (horaires of horaire; track horaires) {
+            <mat-option [value]="horaires.value">{{
+              horaires.viewValue
+            }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="btn">
+        <button class="back" matStepperPrevious>précédent</button>
+        <button
+          class="next"
+          matStepperNext
+          [disabled]="fourthFormGroup.invalid"
+        >
+          Suivant
+        </button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <div class="card">
+      <h1>Confirmez-vous la modification de cette matière?</h1>
+    </div>
+    <div class="btn">
+      <button class="back" matStepperPrevious>précédent</button>
+      <button class="next" (click)="getAllFormData()">Enregistrer</button>
+    </div>
+  </mat-step>
+</mat-stepper>

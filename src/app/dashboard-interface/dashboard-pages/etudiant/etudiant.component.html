@@ -1,0 +1,259 @@
+<section>
+  <!-- Afficher un message si aucun étudiant  n'est enregistrée -->
+  <div *ngIf="studentTotal === 0; else etudiant" class="no-data">
+    <p>Aucun étudiant enregistré !</p>
+  </div>
+
+  <ng-template #etudiant>
+    <!-- start section1  -->
+    <div class="first-section">
+      <h1>étudiant</h1>
+      <div class="second-bloc">
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ studentTotal }}</p>
+              <h2>étudiants totals</h2>
+            </div>
+            <span><mat-icon>face</mat-icon></span>
+          </div>
+          <p>{{ lastStudent.firstname + " " + lastStudent.lastname }}</p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ studentsFrequentlyTotal }}</p>
+              <h2>étudiants ajoutés recemment</h2>
+            </div>
+            <span><mat-icon>face</mat-icon></span>
+          </div>
+          <p>
+            {{
+              lastStudentRecently
+                ? lastStudentRecently.firstname +
+                  " " +
+                  lastStudentRecently.lastname
+                : "Aucun étudiant enregisté récemment"
+            }}
+          </p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ hommeTotal }}</p>
+              <h2>total étudiants hommes</h2>
+            </div>
+            <span><mat-icon>face</mat-icon></span>
+          </div>
+          <p>
+            {{
+              lastStudentMale
+                ? lastStudentMale.firstname + " " + lastStudentMale.lastname
+                : "Aucun étudiant enregistré"
+            }}
+          </p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ femmeTotal }}</p>
+              <h2>total étudiants femmes</h2>
+            </div>
+            <span><mat-icon>face</mat-icon></span>
+          </div>
+          <p>
+            {{
+              lastStudentFeMale
+                ? lastStudentFeMale.firstname + " " + lastStudentFeMale.lastname
+                : "Aucune étudiante enregistrée"
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- end section1  -->
+
+    <!-- start section2  -->
+    <div class="second-section">
+      <div class="sort">
+        <h2>Rechercher par:</h2>
+
+        <!-- all options  -->
+        <div class="options">
+          <!-- first option  -->
+          <input type="checkbox" name="#" id="check" />
+          <div class="option">
+            <div class="label1">
+              <label for="check"
+                ><mat-icon>sort_by_alpha</mat-icon><span>Noms</span></label
+              >
+            </div>
+            <div class="input1">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  name="#"
+                  #filterNameStudent
+                  (keyup)="filterByName(filterNameStudent.value)"
+                  name="#"
+                  id="#"
+                  placeholder="Noms..."
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- second option  -->
+          <input type="checkbox" name="#" id="check2" />
+          <div class="option">
+            <div class="label2">
+              <label for="check2"
+                ><mat-icon>vpn_key</mat-icon><span>Matricule</span></label
+              >
+            </div>
+            <div class="input2">
+              <div>
+                <mat-icon>vpn_key</mat-icon>
+                <input
+                  type="search"
+                  name="#"
+                  id="input2"
+                  #filterMatriculeStudent
+                  (keyup)="filterByMatricule(filterMatriculeStudent.value)"
+                  placeholder="Matricule..."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- table of session -->
+      <div class="cards" [@pageTransition]="currentPageState">
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th (click)="sortData('name')">
+                Noms <span [ngClass]="getSortIcon('name')"></span>
+              </th>
+              <th (click)="sortData('matricule')">
+                Matricule <span [ngClass]="getSortIcon('matricule')"></span>
+              </th>
+              <th (click)="sortData('session')">
+                Session <span [ngClass]="getSortIcon('session')"></span>
+              </th>
+              <th (click)="sortData('formation')">
+                Formation <span [ngClass]="getSortIcon('formation')"></span>
+              </th>
+              <th (click)="sortData('campus')">
+                Campus <span [ngClass]="getSortIcon('campus')"></span>
+              </th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of currentVisibleData; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td class="startDate">
+                <span
+                  ><img
+                    *ngIf="item.img; else defaultImage"
+                    [src]="'data:image/jpeg;base64,' + item.img.data"
+                    alt="Image etudiant" />
+                  <ng-template #defaultImage>
+                    <img
+                      src="images/unnamed.jpg"
+                      alt="unnamed.jpg"
+                    /> </ng-template></span
+                ><span>{{ item.firstname + " " + item.lastname }}</span>
+              </td>
+              <td>{{ item.matricule }}</td>
+              <td>{{ item.session.dateDebut }}</td>
+              <td>{{ item.formation.specialite }}</td>
+              <td>{{ item.session.center.name }}</td>
+              <td class="more">
+                <button class="more-icon" (click)="toggleModal(i, $event)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <div
+                  class="modal"
+                  [ngClass]="{ show: isModalVisible[i] }"
+                  (click)="$event.stopPropagation()"
+                >
+                  <div class="text">
+                    <button (click)="consulterEtudiant(item.id)">
+                      <img
+                        src="images/eye-svgrepo-com.svg"
+                        alt="eye-svgrepo-com.svg"
+                      />
+                      <span class="see">Consulter</span>
+                    </button>
+                  </div>
+                  <!-- <div class="text">
+                  <button (click)="paiementEtudiant(item.id, item.firstname, item.lastname)">
+                    <img
+                      src="images/money-cash-svgrepo-com .svg"
+                      alt="eye-svgrepo-com.svg"
+                    />
+                    <span class="paiement">Effecuter paiement</span>
+                  </button>
+                </div> -->
+                  <div
+                    class="text"
+                    *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+                  >
+                    <button
+                      (click)="onOptionSelectedDelete(i, $event, item.id)"
+                    >
+                      <img
+                        src="images/delete-svgrepo-com.svg"
+                        alt="delete-svgrepo-com.svg"
+                      />
+                      <span class="delete">Supprimer</span>
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- pagination  -->
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">
+          Précédent
+        </button>
+        <span *ngFor="let page of pageNumbers()">
+          <button
+            [class.active]="page === currentPage"
+            (click)="changePageWithAnimation(page)"
+          >
+            {{ page }}
+          </button>
+        </span>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage === pageNumbers().length"
+        >
+          Suivant
+        </button>
+      </div>
+    </div>
+    <!-- end section2  --->
+  </ng-template>
+
+  <!-- add button session  -->
+  <app-add-buttton
+    *ngIf="
+      role === 'CONTRIBUTEUR' ||
+      role === 'EDITEUR' ||
+      role === 'MANAGER' ||
+      role === 'ADMINISTRATEUR'
+    "
+    [buttonText]="'Ajouter un étudiant'"
+    (click)="addStudent()"
+  ></app-add-buttton>
+</section>

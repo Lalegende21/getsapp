@@ -1,0 +1,128 @@
+<section>
+  <h1>permissions utilisateur</h1>
+
+  <div class="cards">
+    <div class="card">
+      <h2>Role Visisteur</h2>
+      <div class="autorisation">
+        <p>Cet utilisateur aura ces autorisations:</p>
+        <ul class="check-list">
+          <li>Consulter les informations</li>
+        </ul>
+        <p>Cet utilisateur n'aura pas ces autorisations:</p>
+        <ul class="access">
+          <li>Ajouter de nouvelles données</li>
+          <li>Modifier les données</li>
+          <li>Supprimer des données</li>
+          <li>Modifier les autorisations d'autres utilisateurs</li>
+        </ul>
+      </div>
+      <button
+        (click)="updateRole('VISITEUR')"
+        [disabled]="currentRole === 'VISITEUR'"
+        [ngClass]="{ 'disabled-button': currentRole === 'VISITEUR' }"
+      >
+        Attribuer
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>Role Contributeur</h2>
+      <div class="autorisation">
+        <p>Cet utilisateur aura ces autorisations:</p>
+        <ul class="check-list">
+          <li>Consulter les informations</li>
+          <li>Ajouter de nouvelles données</li>
+        </ul>
+        <p>Cet utilisateur n'aura pas ces autorisations:</p>
+        <ul class="access">
+          <li>Modifier les données</li>
+          <li>Supprimer des données</li>
+          <li>Modifier les autorisations d'autres utilisateurs</li>
+        </ul>
+      </div>
+      <button
+        (click)="updateRole('CONTRIBUTEUR')"
+        [disabled]="currentRole === 'CONTRIBUTEUR'"
+        [ngClass]="{ 'disabled-button': currentRole === 'CONTRIBUTEUR' }"
+      >
+        Attribuer
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>Role Editeur</h2>
+      <div class="autorisation">
+        <p>Cet utilisateur aura ces autorisations:</p>
+        <ul class="check-list">
+          <li>Consulter les informations</li>
+          <li>Ajouter de nouvelles données</li>
+          <li>Modifier les données</li>
+        </ul>
+        <p>Cet utilisateur n'aura pas ces autorisations:</p>
+        <ul class="access">
+          <li>Supprimer des données</li>
+          <li>Modifier les autorisations d'autres utilisateurs</li>
+        </ul>
+      </div>
+      <button
+        (click)="updateRole('EDITEUR')"
+        [disabled]="currentRole === 'EDITEUR'"
+        [ngClass]="{ 'disabled-button': currentRole === 'EDITEUR' }"
+      >
+        Attribuer
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>Role Manager</h2>
+      <div class="autorisation">
+        <p>Cet utilisateur aura ces autorisations:</p>
+        <ul class="check-list">
+          <li>Consulter les informations</li>
+          <li>Ajouter de nouvelles données</li>
+          <li>Modifier les données</li>
+          <li>Supprimer des données</li>
+        </ul>
+        <p>Cet utilisateur n'aura pas ces autorisations:</p>
+        <ul class="access">
+          <li>Modifier les autorisations d'autres utilisateurs</li>
+        </ul>
+      </div>
+      <button
+        (click)="updateRole('MANAGER')"
+        [disabled]="currentRole === 'MANAGER'"
+        [ngClass]="{ 'disabled-button': currentRole === 'MANAGER' }"
+      >
+        Attribuer
+      </button>
+    </div>
+
+    <div class="card">
+      <h2>Role Administrateur</h2>
+      <div class="autorisation">
+        <p>Cet utilisateur aura ces autorisations:</p>
+        <ul class="check-list">
+          <li>Consulter les informations</li>
+          <li>Ajouter de nouvelles données</li>
+          <li>Modifier les données</li>
+          <li>Supprimer des données</li>
+          <li>Modifier les autorisations d'autres utilisateurs</li>
+        </ul>
+      </div>
+      <button
+        (click)="updateRole('ADMINISTRATEUR')"
+        [disabled]="currentRole === 'ADMINISTRATEUR'"
+        [ngClass]="{ 'disabled-button': currentRole === 'ADMINISTRATEUR' }"
+      >
+        Attribuer
+      </button>
+    </div>
+  </div>
+
+  <div class="back">
+    <button (click)="backPage()">
+      <mat-icon>west</mat-icon>
+    </button>
+  </div>
+</section>

@@ -1,0 +1,72 @@
+<section>
+  <div class="container">
+    <div class="student">
+      <div class="infos-student">
+        <div class="img">
+          <div class="image">
+            <img *ngIf="safeImageUrl; else noImage" [src]="safeImageUrl" />
+            <ng-template #noImage>
+              <img src="/images/image_not_found.jpg" alt="user" />
+            </ng-template>
+          </div>
+          <form
+            *ngIf="
+              role === 'EDITEUR' ||
+              role === 'MANAGER' ||
+              role === 'ADMINISTRATEUR'
+            "
+            (ngSubmit)="uploadImageCenter(image)"
+            enctype="multipart/form-data"
+          >
+            <label for="file-upload" class="custom-file-upload">
+              <mat-icon>cloud_upload</mat-icon><span>Modifier</span>
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              name="image"
+              (change)="onFileSelected($event)"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="session">
+      <div class="infos-formations card-style">
+        <div class="heading">
+          <h1>Infos Campus</h1>
+          <button
+            *ngIf="
+              role === 'EDITEUR' ||
+              role === 'MANAGER' ||
+              role === 'ADMINISTRATEUR'
+            "
+            class="btn-update"
+            (click)="updateCenter(name, localisation)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="subheading">
+          <div>
+            <p><mat-icon>sort_by_alpha</mat-icon><span>Nom</span></p>
+            <h6>{{ name }}</h6>
+          </div>
+          <div>
+            <p><mat-icon>location_on</mat-icon><span>Localisation</span></p>
+            <h6>{{ localisation }}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="back">
+    <button (click)="backPage()">
+      <mat-icon>west</mat-icon>
+    </button>
+  </div>
+</section>
+
+<ngx-spinner></ngx-spinner>

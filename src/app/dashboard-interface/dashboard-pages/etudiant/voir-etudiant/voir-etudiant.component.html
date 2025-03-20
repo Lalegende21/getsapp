@@ -1,0 +1,340 @@
+<section>
+  <div class="container">
+    <div class="student">
+      <div class="infos-student">
+        <div class="img">
+          <div class="image">
+            <img *ngIf="safeImageUrl; else noImage" [src]="safeImageUrl" />
+            <ng-template #noImage>
+              <img
+                [src]="
+                  sexe === 'HOMME'
+                    ? '/images/tutor_male.png'
+                    : '/images/tutor_female.jpg'
+                "
+                alt="tutor_image"
+              />
+            </ng-template>
+          </div>
+          <form
+            *ngIf="
+              role === 'EDITEUR' ||
+              role === 'MANAGER' ||
+              role === 'ADMINISTRATEUR'
+            "
+            (ngSubmit)="uploadImageStudent(image)"
+            enctype="multipart/form-data"
+          >
+            <label for="file-upload" class="custom-file-upload">
+              <mat-icon>cloud_upload</mat-icon><span>Modifier</span>
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              name="image"
+              (change)="onFileSelected($event)"
+            />
+          </form>
+        </div>
+        <div class="subheading">
+          <div>
+            <p>
+              <mat-icon>sort_by_alpha</mat-icon>
+              <span>Noms</span>
+            </p>
+            <h4>{{ firstname ? firstname : "Null" }}</h4>
+          </div>
+          <div>
+            <p>
+              <mat-icon>sort_by_alpha</mat-icon>
+              <span>Prénoms</span>
+            </p>
+            <h4>{{ lastname ? lastname : "Null" }}</h4>
+          </div>
+          <div>
+            <p>
+              <mat-icon>vpn_key</mat-icon>
+              <span>matricule</span>
+            </p>
+            <h4>{{ matricule ? matricule : "Null" }}</h4>
+          </div>
+          <div>
+            <p>
+              <mat-icon>alternate_email</mat-icon>
+              <span>email</span>
+            </p>
+            <h4>{{ email ? email : "Null" }}</h4>
+          </div>
+          <div>
+            <p>
+              <mat-icon>phone_in_talk</mat-icon>
+              <span>Numéro téléphone</span>
+            </p>
+            <h4>+237 {{ phone ? phone : "Null" }}</h4>
+          </div>
+          <div>
+            <p>
+              <mat-icon>badge</mat-icon>
+              <span>CNI</span>
+            </p>
+            <h4>{{ cni ? cni : "Null" }}</h4>
+          </div>
+          <div>
+            <p>
+              <mat-icon>male</mat-icon>
+              <span>genre</span>
+            </p>
+            <h4>{{ sexe ? sexe : "Null" }}</h4>
+          </div>
+          <div>
+            <p>
+              <mat-icon>calendar_month</mat-icon>
+              <span>date de naissance</span>
+            </p>
+            <h4>{{ dob ? dob : "Null" }}</h4>
+          </div>
+        </div>
+        <div class="update">
+          <button
+            *ngIf="
+              role === 'EDITEUR' ||
+              role === 'MANAGER' ||
+              role === 'ADMINISTRATEUR'
+            "
+            class="btn-update"
+            (click)="updateStudentProfil()"
+          >
+            <mat-icon>edit</mat-icon>
+            <span>Modifier</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="reduction card-style">
+        <div class="heading">
+          <h1>Reduction</h1>
+
+          <button
+            *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+            class="btn-update"
+            (click)="getReduction(firstname, lastname, formation, montantTotal)"
+            [disabled]="montantRestantaPayer === 0"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="subheading">
+          <div>
+            <p>Montant Total</p>
+            <h6>
+              <span>{{ montantTotal ? montantTotal : "Null" }}</span>
+              XAF
+            </h6>
+          </div>
+          <div class="mtp">
+            <p>Montant Reduction</p>
+            <h6>
+              <span>{{ reduction ? reduction : "Null" }}</span> XAF
+            </h6>
+          </div>
+          <div class="mrp">
+            <p>Montant Apres Reduction</p>
+            <h6>
+              <span>{{
+                montantAfterReduction ? montantAfterReduction : "Null"
+              }}</span>
+              XAF
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formation">
+      <div class="infos-formations card-style">
+        <div class="heading">
+          <h1>Infos Formation</h1>
+          <button
+            *ngIf="
+              role === 'EDITEUR' ||
+              role === 'MANAGER' ||
+              role === 'ADMINISTRATEUR'
+            "
+            class="btn-update"
+            (click)="updateStudentFormation()"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="subheading">
+          <div>
+            <p>Campus</p>
+            <h6>
+              <span>{{ center ? center : "Null" }}</span>
+            </h6>
+          </div>
+          <div>
+            <p>Formation</p>
+            <h6>
+              <span>{{ formation ? formation : "Null" }}</span>
+            </h6>
+          </div>
+          <div>
+            <p>Session</p>
+            <h6>
+              <span>{{ dateDebut ? dateDebut : "Null" }}</span>
+            </h6>
+          </div>
+          <div>
+            <p>Horaire</p>
+            <h6>
+              <span>{{ horaire ? horaire : "Null" }}</span>
+            </h6>
+          </div>
+        </div>
+      </div>
+
+      <div class="fee-formations card-style">
+        <div class="heading">
+          <h1>Finance Formation</h1>
+          <!-- <button class="btn-update">
+            <mat-icon>edit</mat-icon>
+          </button> -->
+        </div>
+        <div class="subheading">
+          <div class="mtt">
+            <p>Montant Total</p>
+            <h6>
+              <span>{{ montantTotal ?? "Null" }}</span>
+              XAF
+            </h6>
+          </div>
+          <div class="mtp">
+            <p>Montant Payé</p>
+            <h6>
+              <span>{{ montantPaye ?? "Null" }}</span> XAF
+            </h6>
+          </div>
+          <div>
+            <p>Inscription</p>
+            <h6>
+              <span>{{ inscriptionPaiementsValue ?? "Null" }}</span>
+              XAF
+            </h6>
+          </div>
+          <div>
+            <p>1ERE Tranche</p>
+            <h6>
+              <span>{{ firstPaiementsValue ?? "Null" }}</span>
+              XAF
+            </h6>
+          </div>
+          <div>
+            <p>2E Tranche</p>
+            <h6>
+              <span>{{ secondPaiementsValue ?? "Null" }}</span>
+              XAF
+            </h6>
+          </div>
+          <div>
+            <p>3E Tranche</p>
+            <h6>
+              <span>{{ thirdPaiementsValue ?? "Null" }}</span>
+              XAF
+            </h6>
+          </div>
+          <div>
+            <p>Autres</p>
+            <h6>
+              <span>{{
+                otherPaiementsValue ? otherPaiementsValue : "Null"
+              }}</span>
+              XAF
+            </h6>
+          </div>
+          <div class="mrp">
+            <p>Montant Restant</p>
+            <h6>
+              <span>{{ montantRestantaPayer ?? "Null" }}</span>
+              XAF
+            </h6>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <div class="btn-menu">
+          <button
+            *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+            (click)="applyPaiement()"
+            [disabled]="montantRestantaPayer === 0"
+          >
+            <mat-icon>paid</mat-icon>
+            <span>Effectuer Un Paiement</span>
+          </button>
+        </div>
+        <div
+          *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+          class="btn-menu"
+        >
+          <button (click)="goToPaiementsEtudiant()">
+            <mat-icon>description</mat-icon>
+            <span>Liste Des Paiements</span>
+          </button>
+        </div>
+        <div
+          *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+          class="btn-menu"
+        >
+          <button (click)="cancelPaiementsEtudiant()">
+            <mat-icon>delete</mat-icon>
+            <span>Annuler Un Paiement</span>
+          </button>
+        </div>
+        <div
+          *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+          class="btn-menu"
+        >
+          <button
+            (click)="
+              updateReduction(firstname, lastname, formation, montantTotal)
+            "
+            [disabled]="montantRestantaPayer === 0"
+          >
+            <mat-icon>edit</mat-icon>
+            <span>Modifier La Reduction</span>
+          </button>
+        </div>
+        <div
+          *ngIf="
+            role === 'MANAGER' ||
+            role === 'ADMINISTRATEUR'
+          "
+          class="btn-menu"
+        >
+          <button
+            (click)="
+              cancelReduction(firstname, lastname, formation, montantTotal)
+            "
+            [disabled]="montantRestantaPayer === 0"
+          >
+            <mat-icon>delete</mat-icon>
+            <span>Annuler La reduction</span>
+          </button>
+        </div>
+        <div class="btn-menu">
+          <button (click)="generatePDF()">
+            <mat-icon>picture_as_pdf</mat-icon>
+            <span>Générer Un Pdf</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="back">
+    <button (click)="backPage()">
+      <mat-icon>west</mat-icon>
+    </button>
+  </div>
+</section>

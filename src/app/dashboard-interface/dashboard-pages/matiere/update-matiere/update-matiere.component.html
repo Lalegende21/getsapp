@@ -1,0 +1,61 @@
+<form [formGroup]="updateCourseForm" (ngSubmit)="updateCourse()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Modifier cette matière</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ nom  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Nom</mat-label>
+          <input formControlName="name" [(ngModel)]="name" matInput placeholder="Javascript" />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateCourseForm.hasError('required', 'name') &&
+            updateCourseForm.controls['name'].touched
+          "
+          >Le nom du campus est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            updateCourseForm.hasError('minlength', 'name') &&
+            updateCourseForm.controls['name'].touched
+          "
+          >Le nom du campus doit avoir 2 caractères minimum!</span
+        >
+      </div>
+
+      <div>
+        <mat-form-field floatLabel="always">
+          <mat-label>Durée</mat-label>
+          <input
+            formControlName="duree"
+            [(ngModel)]="duree"
+            matInput
+            type="number"
+            class="example-right-align"
+            placeholder="0"
+          />
+          <span matTextSuffix>semaine(s)</span>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateCourseForm.hasError('required', 'duree') &&
+            updateCourseForm.controls['duree'].touched
+          "
+          >La durée de la matière est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

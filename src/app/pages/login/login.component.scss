@@ -1,0 +1,374 @@
+@import "../../../styles.scss";
+
+section {
+  height: 100vh;
+  padding: 4rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $background;
+
+  .container {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    background-color: $white;
+    box-shadow: 0 0 0.5rem #ccc;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    .left-side {
+      width: 50%;
+      padding: 4rem 6rem;
+
+      .content {
+        width: 75%;
+      }
+
+      .title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+
+        img {
+          width: 2rem;
+        }
+
+        h1 {
+          color: $logo-color;
+          font-size: 1.8rem;
+          font-weight: 500;
+          text-transform: capitalize;
+        }
+      }
+
+      h2 {
+        font-size: 2.2rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        margin-bottom: 0.5rem;
+      }
+
+      .welcome {
+        font-size: 1.4rem;
+        color: $gris-pale;
+        margin-bottom: 2rem;
+      }
+
+      .btn-login {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 0.5rem;
+          width: 50%;
+          padding: 0.5rem 3rem;
+          border: none;
+          border-radius: 0.5rem;
+          background-color: transparent;
+          box-shadow: 0 0 0.2rem #ccc;
+          cursor: pointer;
+          transition: all 0.3s;
+
+          img {
+            width: 2.5rem;
+          }
+
+          span {
+            font-size: 1.4rem;
+          }
+
+          &:hover {
+            background-color: $bleu-pale;
+            color: $white;
+          }
+        }
+      }
+
+      .continue {
+        position: relative;
+        font-size: 1.2rem;
+        color: $gris-pale;
+        text-align: center;
+        margin-bottom: 2rem;
+
+        &::before {
+          content: "";
+          position: absolute;
+          width: 25%;
+          top: 50%;
+          left: 0;
+          height: 0.1rem;
+          background-color: $gris-pale;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          width: 25%;
+          top: 50%;
+          right: 0;
+          height: 0.1rem;
+          background-color: $gris-pale;
+        }
+      }
+
+      form {
+        mat-form-field {
+          width: 100%;
+
+          button {
+            background-color: transparent;
+            cursor: pointer;
+            border: none;
+            margin-right: 1rem;
+          }
+        }
+
+        .error {
+          font-size: 1.2rem;
+          color: red;
+          display: block;
+          margin-top: -1.5rem;
+          margin-bottom: 1rem;
+          font-weight: 500;
+        }
+
+        .forgot-password {
+          text-align: right;
+          font-size: 1.2rem;
+          color: $logo-color;
+          margin-bottom: 2rem;
+
+          a {
+            color: $logo-color;
+          }
+        }
+
+        .submit {
+          width: 100%;
+          padding: 1rem 2rem;
+          text-align: center;
+          background-color: $logo-color;
+          color: $white;
+          font-size: 1.5rem;
+          text-transform: capitalize;
+          border: none;
+          border-radius: 0.5rem;
+          cursor: pointer;
+          margin-bottom: 2rem;
+          transition: all .5s;
+
+          &:hover {
+            background-color: $bleu-pale;
+          }
+        }
+
+        .create-account {
+          text-align: center;
+          font-size: 1.2rem;
+
+          a {
+            color: $logo-color;
+            margin-left: 0.2rem;
+          }
+        }
+      }
+    }
+
+    .right-side {
+      width: 50%;
+      background-color: $logo-color;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .image {
+        width: 20rem;
+        height: 20rem;
+        border: none;
+        border-radius: 100%;
+        overflow: hidden;
+        margin-bottom: 5rem;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      p {
+        font-size: 1.6rem;
+        color: $white;
+        width: 70%;
+        text-align: center;
+      }
+    }
+  }
+}
+
+/********************** MEDIA QUERIES *****************************/
+@media screen and (max-width: 1775px) {
+  section {
+    .container {
+      .left-side {
+        .content {
+          width: 90%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1510px) {
+  section {
+    .container {
+      .left-side {
+        .content {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  section {
+    .container {
+      .left-side {
+        width: 100%;
+      }
+
+      .right-side {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 865px) {
+  section {
+    .container {
+      width: 90%;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  section {
+    .container {
+      .left-side {
+        padding: 4rem 2rem;
+
+        .btn-login {
+          flex-direction: column;
+
+          button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 595px) {
+  section {
+    .container {
+      .left-side {
+        .title {
+          justify-content: center;
+        }
+
+        h2 {
+          text-align: center;
+        }
+
+        .welcome {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 465px) {
+  section {
+    .container {
+      .left-side {
+        h2 {
+          font-size: 1.8rem;
+        }
+
+        .continue {
+          &::before {
+            content: "";
+            width: 20%;
+          }
+
+          &::after {
+            content: "";
+            width: 20%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 395px) {
+  section {
+    .container {
+      .left-side {
+        h2 {
+          font-size: 1.8rem;
+        }
+
+        .continue {
+          &::before {
+            content: "";
+            width: 15%;
+          }
+
+          &::after {
+            content: "";
+            width: 15%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 345px) {
+  section {
+    .container {
+      .left-side {
+        h2 {
+          font-size: 1.8rem;
+        }
+
+        .continue {
+          &::before {
+            content: "";
+            width: 10%;
+          }
+
+          &::after {
+            content: "";
+            width: 10%;
+          }
+        }
+      }
+    }
+  }
+}

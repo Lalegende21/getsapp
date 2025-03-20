@@ -1,0 +1,24 @@
+<div class="container">
+  <div mat-dialog-title>
+    <h1>Annulation de la reduction sur le montant total de la formation</h1>
+  </div>
+
+  <form>
+    <div mat-dialog-content>
+      <div class="text">
+        <p>
+          Vous êtes sur le point de vouloir annuler la reduction accordée à
+          l'étudiant
+          <span>{{ firstname + " " + lastname }}</span> concernant sa spécialité
+          <span>{{ specialite }}</span> dont le montant total s'élève à
+          <span>{{ montantTotal }}</span> XAF.
+        </p>
+      </div>
+    </div>
+
+    <div mat-dialog-actions class="button">
+      <button mat-raised-button (click)="closeDialog()">Annuler</button>
+      <button type="submit" (click)="cancelReduction()">Confirmer</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,178 @@
+<section>
+  <!-- Afficher un message si aucun paiement  n'est enregistrée -->
+  <div *ngIf="paiementsTotal === 0; else paiement" class="no-data">
+    <p>Aucun paiement enregistré !</p>
+  </div>
+
+  <ng-template #paiement>
+    <!-- start section1  -->
+    <div class="first-section">
+      <h1>Paiement</h1>
+      <div class="second-bloc">
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ paiementsTotal }}</p>
+              <h2>Paiements totals</h2>
+            </div>
+            <span><mat-icon>payments</mat-icon></span>
+          </div>
+          <p>
+            {{
+              lastPaiementTotal.student.firstname +
+                " " +
+                lastPaiementTotal.student.lastname
+            }}
+          </p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ paiementsFrequentlyTotal }}</p>
+              <h2>Paiements ajoutés récemment</h2>
+            </div>
+            <span><mat-icon>payments</mat-icon></span>
+          </div>
+          <p>
+            {{
+              lastPaiementTotalRecently
+                ? lastPaiementTotalRecently.student.firstname +
+                  " " +
+                  lastPaiementTotalRecently.student.lastname
+                : "Aucun paiement enregisté récemment"
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- end section1  -->
+
+    <!-- start section2  -->
+    <div class="second-section">
+      <div class="sort">
+        <h2>Rechercher par:</h2>
+
+        <!-- all options  -->
+        <div class="options">
+          <!-- first option  -->
+          <input type="checkbox" name="#" id="check" />
+          <div class="option">
+            <div class="label1">
+              <label for="check"
+                ><mat-icon>sort_by_alpha</mat-icon><span>Etudiant</span></label
+              >
+            </div>
+            <div class="input1">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  name="#"
+                  #filterPaiementStudent
+                  (keyup)="filterByStudent(filterPaiementStudent.value)"
+                  id="#"
+                  placeholder="Nom..."
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- second option  -->
+          <input type="checkbox" name="#" id="check2" />
+          <div class="option">
+            <div class="label2">
+              <label for="check2"
+                ><mat-icon>format_list_bulleted</mat-icon
+                ><span>Type de paiement</span></label
+              >
+            </div>
+            <div class="input2">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  name="#"
+                  #filterTypePaiement
+                  (keyup)="filterByTypePaiement(filterTypePaiement.value)"
+                  id="input2"
+                  placeholder="Type de paiement..."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- table of session -->
+      <div class="cards" [@pageTransition]="currentPageState">
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Type Paiement</th>
+              <th>Montant</th>
+              <th>Etudiant</th>
+              <th>Date d'enregistrement</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of currentVisibleData; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                <span>{{ item.typePaiement }}</span>
+              </td>
+              <td>{{ item.amount }} XAF</td>
+              <td>
+                {{ item.student.firstname + " " + item.student.lastname }}
+              </td>
+              <td>{{ item.createDate | date : "medium" }}</td>
+              <td class="more">
+                <button class="more-icon" (click)="toggleModal(i, $event)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <div
+                  class="modal"
+                  [ngClass]="{ show: isModalVisible[i] }"
+                  (click)="$event.stopPropagation()"
+                >
+                  <div class="text">
+                    <button (click)="consulterPaiement(item.student.id)">
+                      <img
+                        src="images/eye-svgrepo-com.svg"
+                        alt="eye-svgrepo-com.svg"
+                      />
+                      <span class="see">Consulter</span>
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- pagination  -->
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">
+          Précédent
+        </button>
+        <span *ngFor="let page of pageNumbers()">
+          <button
+            [class.active]="page === currentPage"
+            (click)="changePageWithAnimation(page)"
+          >
+            {{ page }}
+          </button>
+        </span>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage === pageNumbers().length"
+        >
+          Suivant
+        </button>
+      </div>
+    </div>
+    <!-- end section2  -->
+  </ng-template>
+</section>

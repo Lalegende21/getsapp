@@ -1,0 +1,60 @@
+<form [formGroup]="updateTutorForm" (ngSubmit)="updateTutor()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Modifier ce tuteur</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ nom  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Nom</mat-label>
+          <input formControlName="fullname" [(ngModel)]="fullname" matInput placeholder="John Doe" />
+        </mat-form-field>
+      </div>
+
+      <!-- Validation du champ email  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            formControlName="email"
+            [(ngModel)]="email"
+            matInput
+            placeholder="johndoe@gmail.com"
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- Validation du champ phonenumber  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Numero telephone</mat-label>
+          <input
+            formControlName="phonenumber"
+            [(ngModel)]="phonenumber"
+            matInput
+            placeholder="677777777"
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- Validation du champ Code formation  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Type de tuteur</mat-label>
+          <mat-select formControlName="typeTutor" [(ngModel)]="typeTutors">
+            @for (type of typeTuteur; track type) {
+            <mat-option [value]="type.value">{{ type.viewValue }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

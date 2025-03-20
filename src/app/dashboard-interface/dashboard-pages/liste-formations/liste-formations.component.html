@@ -1,0 +1,207 @@
+<section>
+  <!-- Afficher un message si aucune formation  n'est enregistrée -->
+  <div *ngIf="currentVisibleData?.length === 0; else formation" class="no-data">
+    <p>Aucune formation enregistrée !</p>
+
+    <!-- add button session  -->
+    <app-add-buttton
+      *ngIf="
+        role === 'CONTRIBUTEUR' ||
+        role === 'EDITEUR' ||
+        role === 'MANAGER' ||
+        role === 'ADMINISTRATEUR'
+      "
+      [buttonText]="'Ajouter une formation'"
+      (click)="addFormation()"
+    ></app-add-buttton>
+  </div>
+
+  <ng-template #formation>
+    <div class="sort">
+      <h2>Rechercher par:</h2>
+
+      <!-- all options  -->
+      <div class="options">
+        <!-- first option  -->
+        <input type="checkbox" name="#" id="check" />
+        <div class="option">
+          <div class="label1">
+            <label for="check"
+              ><mat-icon>sort_by_alpha</mat-icon><span>Specialité</span></label
+            >
+          </div>
+          <div class="input1">
+            <div>
+              <mat-icon>search</mat-icon>
+              <input
+                #filterName
+                (keyup)="filterBySpeciality(filterName.value)"
+                type="search"
+                name="#"
+                id="#"
+                placeholder="Specialité..."
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- second option  -->
+        <input type="checkbox" name="#" id="check2" />
+        <div class="option">
+          <div class="label2">
+            <label for="check2"
+              ><mat-icon>timer</mat-icon><span>Code</span></label
+            >
+          </div>
+          <div class="input2">
+            <div>
+              <mat-icon>search</mat-icon>
+              <input
+                #filterDuree
+                (keyup)="filterByCode(filterDuree.value)"
+                type="search"
+                name="#"
+                id="input2"
+                placeholder="Code..."
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="student">
+      <div class="heading">
+        <div>
+          <h4>Liste formations</h4>
+          <span class="getsmarter-prof">Liste des formations</span>
+        </div>
+        <button
+          *ngIf="
+            role === 'CONTRIBUTEUR' ||
+            role === 'EDITEUR' ||
+            role === 'MANAGER' ||
+            role === 'ADMINISTRATEUR'
+          "
+          (click)="addFormation()"
+        >
+          <mat-icon>edit</mat-icon>
+          <span>Ajouter</span>
+        </button>
+      </div>
+      <div class="cards" [@pageTransition]="currentPageState">
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th (click)="sortData('specialite')">
+                Spécialité <span [ngClass]="getSortIcon('specialite')"></span>
+              </th>
+              <th (click)="sortData('specificiteFormation.code')">
+                Code
+                <span
+                  [ngClass]="getSortIcon('specificiteFormation.code')"
+                ></span>
+              </th>
+              <th (click)="sortData('periode')">
+                Durée <span [ngClass]="getSortIcon('periode')"></span>
+              </th>
+              <th (click)="sortData('price')">
+                Montant <span [ngClass]="getSortIcon('price')"></span>
+              </th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of currentVisibleData; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td class="startDate">{{ item.specialite }}</td>
+              <td>{{ item.specificiteFormation.code }}</td>
+              <td>{{ item.periode }} mois</td>
+              <td>{{ item.price }} XAF</td>
+              <td class="more">
+                <button class="more-icon" (click)="toggleModal(i, $event)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <div
+                  class="modal"
+                  [ngClass]="{ show: isModalVisible[i] }"
+                  (click)="$event.stopPropagation()"
+                >
+                  <!-- <div class="text">
+                    <button (click)="consulterFormation(item.specialite, item.specificiteFormation.code, item.specificiteFormation.libelle, item.periode, item.price)">
+                      <img
+                        src="images/eye-svgrepo-com.svg"
+                        alt="eye-svgrepo-com.svg"
+                      />
+                      <span class="see">Consulter</span>
+                    </button>
+                  </div> -->
+                  <div
+                    class="text"
+                    *ngIf="
+                      role === 'EDITEUR' ||
+                      role === 'MANAGER' ||
+                      role === 'ADMINISTRATEUR'
+                    "
+                  >
+                    <button
+                      (click)="
+                        updateFormation(
+                          item.id,
+                          item.specialite,
+                          item.specificiteFormation.code,
+                          item.periode,
+                          item.price
+                        )
+                      "
+                    >
+                      <img
+                        src="images/write-svgrepo-com.svg"
+                        alt="write-svgrepo-com.svg"
+                      />
+                      <span class="update">Modifier</span>
+                    </button>
+                  </div>
+                  <div
+                    class="text"
+                    *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+                  >
+                    <button (click)="deleteFormation(item.id)">
+                      <img
+                        src="images/delete-svgrepo-com.svg"
+                        alt="delete-svgrepo-com.svg"
+                      />
+                      <span class="delete">Supprimer</span>
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- pagination  -->
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">
+        Précédent
+      </button>
+      <span *ngFor="let page of pageNumbers()">
+        <button
+          [class.active]="page === currentPage"
+          (click)="changePageWithAnimation(page)"
+        >
+          {{ page }}
+        </button>
+      </span>
+      <button
+        (click)="nextPage()"
+        [disabled]="currentPage === pageNumbers().length"
+      >
+        Suivant
+      </button>
+    </div>
+  </ng-template>
+</section>

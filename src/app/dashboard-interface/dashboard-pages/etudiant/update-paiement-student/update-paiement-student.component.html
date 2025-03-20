@@ -1,0 +1,55 @@
+<form [formGroup]="updatePaiementForm" (ngSubmit)="updatePaiement()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Modifier ce paiement</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ type de paiement  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Type de paiement</mat-label>
+          <mat-select formControlName="typePaiement">
+            @for (type of typePaiement; track type) {
+            <mat-option [value]="type.value">{{ type.viewValue }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updatePaiementForm.hasError('required', 'typePaiement') &&
+            updatePaiementForm.controls['typePaiement'].touched
+          "
+          >Le type de paiement est obligatoires!</span
+        >
+      </div>
+
+      <!-- Validation du champ montant  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Montant</mat-label>
+          <input
+            formControlName="amount"
+            type="number"
+            matInput
+            placeholder="50000"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updatePaiementForm.hasError('required', 'montant') &&
+            updatePaiementForm.controls['montant'].touched
+          "
+          >Le montant est obligatoires!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

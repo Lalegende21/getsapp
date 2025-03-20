@@ -1,1 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100%;
+  font-family: "poppins", "Helvetica Neue", sans-serif;
+}
+
+mat-form-field, mat-label, mat-select, mat-option, input {
+  font-size: 1.5rem;
+}
+
+$green-pale: #008670;
+$logo-color: #284d97;
+$secondary: #f5d333;
+$black: black;
+$white: white;
+$bleu-pale: #9fb8d2;
+$black-pale: #757070;
+$gris-pale: #b9bec4;
+$marron-brun: #f3b171;
+$marron-clair: #f1e7e2;
+
+$background: #f6f6f9;
+$primary: #7380ec;
+$tertiary: #57a89b;
+$danger: #fa3546;
+$success: #239e13;
+$warning: #ffbb55;
+$info-dark: #363949;
+$primary-variant: #111e88;
+$dark-variant: #677483;
+$light: rgba(132, 139, 200, 0.18);

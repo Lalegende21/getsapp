@@ -1,0 +1,72 @@
+<form [formGroup]="updateCodeForm" (ngSubmit)="updateSpecificiteFormation()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Modifier ce code de formation</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ code  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Code</mat-label>
+          <input
+            formControlName="code"
+            [(ngModel)]="code"
+            matInput
+            placeholder="DM"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateCodeForm.hasError('required', 'code') &&
+            updateCodeForm.controls['code'].touched
+          "
+          >Le code est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            updateCodeForm.hasError('minlength', 'code') &&
+            updateCodeForm.controls['code'].touched
+          "
+          >Le code doit avoir minimum 2 lettres minimum!</span
+        >
+      </div>
+
+      <!-- Validation du champ libelle  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Libelle</mat-label>
+          <input
+            formControlName="libelle"
+            [(ngModel)]="libelle"
+            matInput
+            placeholder="Developpement web et mobile"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            updateCodeForm.hasError('required', 'libelle') &&
+            updateCodeForm.controls['libelle'].touched
+          "
+          >Le libelle est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            updateCodeForm.hasError('minlength', 'libelle') &&
+            updateCodeForm.controls['libelle'].touched
+          "
+          >Le libelle doit avoir minimum 2 lettres minimum!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

@@ -1,0 +1,120 @@
+<section>
+  <div class="container">
+    <div class="left-side">
+      <div class="content">
+        <div class="title">
+          <img src="images/icon-site.png" alt="icon-site.png" />
+          <h1>get<span>smarter</span></h1>
+        </div>
+        <h2>Connectez-vous à votre compte!</h2>
+        <!-- <p class="welcome">Bon retour. Selectionner la méthode de connexion</p> -->
+        <!-- <div class="btn-login">
+          <button>
+            <img
+              src="images/google-svgrepo-com.svg"
+              alt="google-svgrepo-com.svg"
+            />
+            <span>google</span>
+          </button>
+          <button>
+            <img
+              src="images/facebook-svgrepo-com.svg"
+              alt="facebook-svgrepo-com.svg"
+            />
+            <span>facebook</span>
+          </button>
+        </div> -->
+        <!-- <p class="continue">où continuer avec votre email</p> -->
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <!-- email field  -->
+          <div class="email">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+                formControlName="username"
+                matInput
+                placeholder="Exemple@gmail.com"
+              />
+              <mat-icon matIconPrefix>mail</mat-icon>
+            </mat-form-field>
+            <span
+              class="error"
+              *ngIf="
+                loginForm.hasError('required', 'username') &&
+                loginForm.controls['username'].touched
+              "
+              >L'email est obligatoire !</span
+            >
+            <span
+              class="error"
+              *ngIf="
+                loginForm.hasError('pattern', 'username') &&
+                loginForm.controls['username'].touched
+              "
+            >
+              L'email est invalide !</span
+            >
+          </div>
+          <!-- password field  -->
+          <div class="password">
+            <mat-form-field appearance="outline">
+              <mat-label>Enter your password</mat-label>
+              <input
+                matInput
+                [type]="isPasswordHidden ? 'password' : 'text'"
+                formControlName="password"
+              />
+
+              <mat-icon matIconPrefix>lock</mat-icon>
+              <button
+                type="button"
+                mat-icon-button
+                matSuffix
+                (click)="clickEvent($event)"
+                [attr.aria-label]="
+                  isPasswordHidden ? 'Hide password' : 'Show password'
+                "
+                [attr.aria-pressed]="isPasswordHidden"
+              >
+                <mat-icon>{{
+                  isPasswordHidden ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+            </mat-form-field>
+            <span
+              class="error"
+              *ngIf="
+                loginForm.hasError('required', 'password') &&
+                loginForm.controls['password'].touched
+              "
+            >
+              Le mot de passe est obligatoire !</span
+            >
+          </div>
+          <p class="forgot-password">
+            <a routerLink="/forgot-password">Mot de passe oublié?</a>
+          </p>
+          <button class="submit" type="submit">connexion</button>
+          <!-- <p class="create-account">
+            Vous n'avez pas encore de compte?<a
+              routerLink="/register"
+              routerLinkActive="router-link-active"
+              >Créer un compte</a
+            >
+          </p> -->
+        </form>
+      </div>
+    </div>
+    <div class="right-side">
+      <div class="image">
+        <img src="images/i1.webp" alt="i1.webp" />
+      </div>
+
+      <p>
+        Connectez-vous à votre compte afin de profiter pleinement de
+        l'application
+      </p>
+    </div>
+  </div>
+</section>
+<ngx-spinner></ngx-spinner>

@@ -1,0 +1,68 @@
+<section>
+  <div class="cards">
+    <div class="image">
+      <div class="img">
+        <img *ngIf="safeImageUrl; else noImage" [src]="safeImageUrl" />
+        <ng-template #noImage>
+          <img src="/images/image_not_found.jpg" alt="user" />
+        </ng-template>
+      </div>
+    </div>
+    <div class="text">
+      <div class="heading">
+        <div>
+          <h4>{{ firstname + " " + lastname }}</h4>
+          <span class="getsmarter-prof">Utilisateur</span>
+        </div>
+        <button (click)="updateUserRole()">
+          <mat-icon>edit</mat-icon>
+          <span>Modifier le role</span>
+        </button>
+      </div>
+
+      <div class="subheading">
+        <div>
+          <p>
+            <mat-icon>sort_by_alpha</mat-icon>
+            <span>Nom complet</span>
+          </p>
+          <h4>{{ firstname + " " + lastname }}</h4>
+        </div>
+        <div>
+          <p>
+            <mat-icon>alternate_email</mat-icon>
+            <span>email</span>
+          </p>
+          <h4>{{ email }}</h4>
+        </div>
+        <div>
+          <p>
+            <mat-icon>phone_in_talk</mat-icon>
+            <span>Numéro téléphone</span>
+          </p>
+          <h4>{{ phone ? phone : "Pas renseigné" }}</h4>
+        </div>
+        <div>
+          <p>
+            <mat-icon>male</mat-icon>
+            <span>gender</span>
+          </p>
+          <h4>{{ genre }}</h4>
+        </div>
+        <div>
+          <p>
+            <mat-icon>manage_accounts</mat-icon>
+            <span>role</span>
+          </p>
+          <h4>{{ role }}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="back">
+    <button (click)="backPage()">
+      <mat-icon>west</mat-icon>
+    </button>
+  </div>
+</section>

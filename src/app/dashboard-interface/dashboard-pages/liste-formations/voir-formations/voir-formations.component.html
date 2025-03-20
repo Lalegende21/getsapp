@@ -1,0 +1,45 @@
+<section>
+  <div class="formations">
+    <div class="heading">
+      <h1>{{ specialite }}</h1>
+      <div class="image">
+        <img
+          src="../../../../assets/images/certificate-contract-svgrepo-com.svg"
+          alt="certificate-contract-svgrepo-com.svg"
+        />
+      </div>
+    </div>
+    <div class="subheading">
+      <div>
+        <p>Code</p>
+        <h6>
+          <span>{{ code }}</span>
+        </h6>
+      </div>
+      <div>
+        <p>Libelle</p>
+        <h6>
+          <span>{{ libelle }}</span>
+        </h6>
+      </div>
+      <div>
+        <p>Période</p>
+        <h6>
+          <span>{{ periode }}</span> mois
+        </h6>
+      </div>
+      <div class="mtp">
+        <p>Montant</p>
+        <h6>
+          <span>{{ price }}</span> XAF
+        </h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="back">
+    <button (click)="backPage()">
+      <mat-icon>west</mat-icon>
+    </button>
+  </div>
+</section>

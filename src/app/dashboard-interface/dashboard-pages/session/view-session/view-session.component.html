@@ -1,0 +1,76 @@
+<section>
+  <div class="container">
+    <div class="student">
+      <div class="infos-student">
+        <div class="img">
+          <div class="image">
+            <img *ngIf="safeImageUrl; else noImage" [src]="safeImageUrl" />
+            <ng-template #noImage>
+              <img src="/images/image_not_found.jpg" alt="user" />
+            </ng-template>
+          </div>
+          <form
+            *ngIf="
+              role === 'EDITEUR' ||
+              role === 'MANAGER' ||
+              role === 'ADMINISTRATEUR'
+            "
+            (ngSubmit)="uploadImageSession(img)"
+            enctype="multipart/form-data"
+          >
+            <label for="file-upload" class="custom-file-upload">
+              <mat-icon>cloud_upload</mat-icon><span>Modifier</span>
+            </label>
+            <input
+              id="file-upload"
+              type="file"
+              name="image"
+              (change)="onFileSelected($event)"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="session">
+      <div class="infos-formations card-style">
+        <div class="heading">
+          <h1>Infos Session</h1>
+          <button
+            *ngIf="
+              role === 'EDITEUR' ||
+              role === 'MANAGER' ||
+              role === 'ADMINISTRATEUR'
+            "
+            class="btn-update"
+            (click)="updateSession(dateDebut, statut)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="subheading">
+          <div>
+            <p><mat-icon>calendar_month</mat-icon><span>Date de debut</span></p>
+            <h6>{{ dateDebut }}</h6>
+          </div>
+          <div>
+            <p><mat-icon>mode_standby</mat-icon><span>Statut</span></p>
+            <h6>{{ statut }}</h6>
+          </div>
+          <div>
+            <p><mat-icon>apartment</mat-icon><span>Campus</span></p>
+            <h6>{{ center }}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="back">
+    <button (click)="backPage()">
+      <mat-icon>west</mat-icon>
+    </button>
+  </div>
+</section>
+
+<ngx-spinner></ngx-spinner>

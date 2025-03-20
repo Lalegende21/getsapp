@@ -1,0 +1,106 @@
+<form [formGroup]="addTutorForm" (ngSubmit)="addTutor()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Enregistrer un tuteur</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ nom  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Nom</mat-label>
+          <input formControlName="fullname" matInput placeholder="John Doe" />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addTutorForm.hasError('minlength', 'fullname') &&
+            addTutorForm.controls['fullname'].touched
+          "
+          >Le nom du professeur doit avoir minimum 3 lettres!</span
+        >
+      </div>
+
+      <!-- Validation du champ email  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            formControlName="email"
+            matInput
+            placeholder="johndoe@gmail.com"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addTutorForm.hasError('required', 'email') &&
+            addTutorForm.controls['email'].touched
+          "
+          >L'email est obligatoire !</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addTutorForm.hasError('pattern', 'email') &&
+            addTutorForm.controls['email'].touched
+          "
+          >L'email doit être obligatoire !</span
+        >
+      </div>
+
+      <!-- Validation du champ phonenumber  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Numero telephone</mat-label>
+          <input
+            formControlName="phonenumber"
+            matInput
+            placeholder="677777777"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addTutorForm.hasError('required', 'phonenumber') &&
+            addTutorForm.controls['phonenumber'].touched
+          "
+          >Le numéro de téléphone est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addTutorForm.hasError('pattern', 'phonenumber') &&
+            addTutorForm.controls['phonenumber'].touched
+          "
+          >Le numéro de téléphone est invalide!</span
+        >
+      </div>
+
+      <!-- Validation du champ type de tuteur  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Type de tuteur</mat-label>
+          <mat-select formControlName="typeTutor">
+            @for (type of typeTuteur; track type) {
+            <mat-option [value]="type.value">{{ type.viewValue }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addTutorForm.hasError('required', 'typeTutor') &&
+            addTutorForm.controls['typeTutor'].touched
+          "
+          >Le tyoe de tuteur est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

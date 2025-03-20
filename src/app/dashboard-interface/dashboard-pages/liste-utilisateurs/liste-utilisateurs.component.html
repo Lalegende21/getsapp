@@ -1,0 +1,223 @@
+<section>
+  <!-- Afficher un message si aucune session  n'est enregistrée -->
+  <div *ngIf="usersTotal === 0; else users" class="no-data">
+    <p>Aucun utilisateur enregistré !</p>
+  </div>
+
+  <ng-template #users>
+    <!-- start section1  -->
+    <div class="first-section">
+      <h1>liste d'utilisateurs</h1>
+      <div class="second-bloc">
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ usersTotal }}</p>
+              <h2>utilisateurs totals</h2>
+            </div>
+            <span><mat-icon>person_3</mat-icon></span>
+          </div>
+          <p>{{ lastUser.firstname + " " + lastUser.lastname }}</p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ usersRecentlyTotal }}</p>
+              <h2>utilisateurs ajoutés recemment</h2>
+            </div>
+            <span><mat-icon>person_3</mat-icon></span>
+          </div>
+          <p>
+            {{
+              lastUserRecently
+                ? lastUserRecently.firstname + " " + lastUserRecently.lastname
+                : "Aucun utilisateur ajouté récemment"
+            }}
+          </p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ hommeTotal ? hommeTotal : 0 }}</p>
+              <h2>total utilisateurs hommes</h2>
+            </div>
+            <span><mat-icon>person_3</mat-icon></span>
+          </div>
+          <p>
+            {{
+              lastHommeTotal
+                ? lastHommeTotal.firstname + " " + lastHommeTotal.lastname
+                : "Aucun utilisateur homme renregistré"
+            }}
+          </p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ femmeTotal ? femmeTotal : 0 }}</p>
+              <h2>total utilisateurs femmes</h2>
+            </div>
+            <span><mat-icon>person_3</mat-icon></span>
+          </div>
+          <p>
+            {{
+              lastFemmeTotal
+                ? lastFemmeTotal.firstname + " " + lastFemmeTotal.lastname
+                : "Aucun utilisateur femme enregistré"
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- end section1  -->
+
+    <!-- start section2  -->
+    <div class="second-section">
+      <div class="sort">
+        <h2>Rechercher par:</h2>
+
+        <!-- all options  -->
+        <div class="options">
+          <!-- first option  -->
+          <input type="checkbox" name="#" id="check" />
+          <div class="option">
+            <div class="label1">
+              <label for="check"
+                ><mat-icon>sort_by_alpha</mat-icon><span>Noms</span></label
+              >
+            </div>
+            <div class="input1">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  #filterName
+                  (keyup)="filterByName(filterName.value)"
+                  name="#"
+                  id="#"
+                  placeholder="Noms..."
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- second option  -->
+          <input type="checkbox" name="#" id="check2" />
+          <div class="option">
+            <div class="label2">
+              <label for="check2"
+                ><mat-icon>alternate_email</mat-icon><span>Email</span></label
+              >
+            </div>
+            <div class="input2">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  #filterEmail
+                  (keyup)="filterByEmail(filterEmail.value)"
+                  name="#"
+                  id="input2"
+                  placeholder="Email..."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- table of users -->
+      <div class="cards" [@pageTransition]="currentPageState">
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Nom complet</th>
+              <th>Email</th>
+              <th>role</th>
+              <th class="date-enregistrement">Date d'enregistrement</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of currentVisibleData; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td class="startDate">
+                <span>
+                  <img
+                    *ngIf="item.img; else defaultImage"
+                    [src]="'data:image/jpeg;base64,' + item.img.data"
+                    alt="Image session"
+                  />
+                  <ng-template #defaultImage>
+                    <img src="images/unnamed.jpg" alt="unnamed.jpg" />
+                  </ng-template> </span
+                ><span>{{ item.firstname + " " + item.lastname }}</span>
+              </td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.role.libelle }}</td>
+              <td class="date-enregistrement">{{ item.createDate }}</td>
+              <td class="more">
+                <button class="more-icon" (click)="toggleModal(i, $event)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <div
+                  class="modal"
+                  [ngClass]="{ show: isModalVisible[i] }"
+                  (click)="$event.stopPropagation()"
+                >
+                  <div class="text">
+                    <button (click)="consulterProfessor(item.id)">
+                      <img
+                        src="images/eye-svgrepo-com.svg"
+                        alt="eye-svgrepo-com.svg"
+                      />
+                      <span class="see">Consulter</span>
+                    </button>
+                  </div>
+                  <div class="text">
+                    <button (click)="onOptionSelected(i, $event)">
+                      <img
+                        src="images/delete-svgrepo-com.svg"
+                        alt="delete-svgrepo-com.svg"
+                      />
+                      <span class="delete">Supprimer</span>
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- pagination  -->
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">
+          Précédent
+        </button>
+        <span *ngFor="let page of pageNumbers()">
+          <button
+            [class.active]="page === currentPage"
+            (click)="changePageWithAnimation(page)"
+          >
+            {{ page }}
+          </button>
+        </span>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage === pageNumbers().length"
+        >
+          Suivant
+        </button>
+      </div>
+    </div>
+    <!-- end section2  --->
+  </ng-template>
+
+  <!-- add button user  -->
+  <app-add-buttton
+    [buttonText]="'Ajouter un utilisateur'"
+    (click)="addUser()"
+  ></app-add-buttton>
+</section>

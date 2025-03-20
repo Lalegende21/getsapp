@@ -1,0 +1,409 @@
+@import "../../../styles.scss";
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10000;
+  padding: 0;
+  color: $black;
+  background-color: $white;
+  box-shadow: 0 0 0.5rem #aaa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      font-size: 2.5rem;
+      text-transform: uppercase;
+      font-style: italic;
+      font-weight: 600;
+
+      &:nth-child(2) {
+        color: $secondary;
+      }
+
+      &:nth-child(3) {
+        color: $logo-color;
+      }
+    }
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    gap: 1rem;
+    border-left: 0.1rem solid #aaa;
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-color: white;
+      padding: 10px;
+      border: 1px solid #aaa;
+      border-radius: 50%;
+      font-size: 15px;
+      cursor: pointer;
+
+      option {
+        padding: 5px;
+        font-size: 14px;
+        background-color: white;
+      }
+    }
+
+    /*******************start barre de selection des pays*********************/
+    .select-menu {
+      position: relative;
+    }
+    .select-menu .select-btn {
+      display: flex;
+      align-items: center;
+      font-size: 1.6rem;
+      color: #5c5b5a;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .select-btn i {
+      transition: 0.3s linear;
+      margin-left: 0.5rem;
+    }
+    .select-menu.active .select-btn i {
+      transform: rotate(-180deg);
+    }
+    .select-menu .options {
+      position: absolute;
+      background-color: white;
+      border-radius: 0.5rem;
+      display: none;
+      border: 0.1rem solid $logo-color;
+      z-index: 1;
+    }
+    .select-menu.active .options {
+      display: block;
+    }
+    .options .option {
+      display: flex;
+      margin: 0.5rem 0;
+      cursor: pointer;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.8rem;
+      font-size: 1.4rem;
+      align-items: center;
+      background-color: white;
+    }
+    .options .option:hover {
+      background-color: #edf3fb;
+    }
+    .option img {
+      width: 1.8rem;
+      margin-right: 1rem;
+    }
+    .option span {
+      display: block;
+      width: 100%;
+    }
+    /*******************************end barre de selection des pays****************************/
+
+    .profil {
+      position: relative;
+
+      .image {
+        display: block;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 100%;
+        overflow: hidden;
+        cursor: pointer;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .list {
+        display: none;
+        position: absolute;
+        top: 120%;
+        left: -250%;
+        background-color: $white;
+        box-shadow: 0 0 0.5rem #ddd;
+        border: 0.1rem solid $gris-pale;
+        border-radius: 0.5rem;
+        font-size: 1.4rem;
+
+        li {
+          list-style: none;
+          transition: all 0.3s;
+
+          a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: $black-pale;
+            padding: 0.5rem;
+          }
+
+          &:hover {
+            background-color: rgb(218, 227, 236);
+          }
+        }
+
+        button {
+          padding: 0.5rem 1rem;
+          background-color: transparent;
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          border: none;
+          color: $black-pale;
+          font-weight: 600;
+          transition: all 0.3s;
+          font-size: 1.4rem;
+          cursor: pointer;
+
+          &:hover {
+            background-color: rgb(218, 227, 236);
+          }
+        }
+      }
+
+      .online {
+        position: absolute;
+        bottom: 1%;
+        right: 0;
+        height: 1.5rem;
+        width: 1.5rem;
+        border: none;
+        border-radius: 100%;
+        background-color: $success;
+      }
+    }
+
+    .profil .list.show {
+      display: block;
+    }
+  }
+}
+/********* Media screen toolbar ************/
+@media screen and (max-width: 450px) {
+  mat-toolbar {
+    .menu {
+      span {
+        font-size: 2rem;
+      }
+    }
+    .user {
+      padding: 0 1rem;
+      border: none;
+
+      a {
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 370px) {
+  mat-toolbar {
+    .menu {
+      span {
+        font-size: 1.8rem;
+      }
+    }
+    .user {
+      gap: 0.3rem;
+      .select-menu .select-btn {
+        font-size: 1.4rem;
+      }
+
+      a {
+        width: 2rem;
+        height: 2rem;
+      }
+
+      .profil {
+        .image {
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+
+        .online {
+          height: 1rem;
+          width: 1rem;
+        }
+      }
+    }
+  }
+}
+
+/********** start sidenav-container ****************/
+.sidenav-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+
+  mat-sidenav {
+    background-color: $logo-color;
+    width: 230px;
+    height: 100%;
+    overflow: auto;
+    /*Mozilla Firefox */
+    scrollbar-color: $secondary $logo-color;
+    scrollbar-width: thin;
+
+    .image {
+      padding: 8rem 0.5rem 0 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      .img {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 100%;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      p {
+        color: $white;
+        font-size: 1.4rem;
+      }
+    }
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: $logo-color;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $secondary;
+      border-radius: 20px;
+      border: 1px solid $logo-color;
+    }
+
+    /* Global */
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+  }
+
+  .sidenav-content {
+    margin-top: 4rem;
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      color: $white;
+      font-size: 1.4rem;
+      font-weight: 200;
+      padding: 1rem;
+
+      &:hover {
+        background-color: $bleu-pale;
+      }
+    }
+
+    .list {
+      label {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 1rem;
+        color: $white;
+        font-size: 1.4rem;
+        font-weight: 200;
+        padding: 1rem;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $bleu-pale;
+        }
+
+        span:first-child {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        span:last-child {
+          font-size: 1rem;
+          transition: all 0.3s;
+        }
+      }
+
+      input[type="checkbox"] {
+        display: none;
+      }
+
+      ul {
+        background-color: $primary;
+        display: none;
+
+        li {
+          a {
+            padding: 0.5rem 0 0.5rem 3rem;
+            margin: 0;
+          }
+        }
+      }
+
+      input[type="checkbox"]:checked ~ ul {
+        display: block;
+      }
+
+      input[type="checkbox"]:checked ~ label {
+        background-color: $bleu-pale;
+      }
+
+      input[type="checkbox"]:checked ~ label span:last-child {
+        transform: rotate(90deg);
+      }
+    }
+
+    .router-link-active {
+      // background-color: $primary;
+      background-color: $secondary;
+    }
+  }
+
+  .main-content {
+    height: 100%;
+    overflow: auto; /* Permet de défiler uniquement le contenu principal */
+    width: 100%;
+  }
+}
+
+/************* responsive mat-sidenav ************/
+@media (max-width: 600px) {
+  mat-sidenav {
+    width: 200px;
+  }
+
+  mat-sidenav.collapsed {
+    width: 0 !important;
+  }
+}

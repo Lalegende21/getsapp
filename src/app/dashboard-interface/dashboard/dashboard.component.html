@@ -1,0 +1,175 @@
+<mat-toolbar>
+  <!-- bouton hamburger et logo du site  -->
+  <div class="menu">
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>{{ isSidenavOpen ? "menu" : "menu" }}</mat-icon>
+    </button>
+    <span>Get</span>
+    <span>smarter</span>
+  </div>
+
+  <div class="user">
+    <!-- debut selecteur de langue  -->
+    <!-- <div class="select-menu" [class.active]="isActive">
+      <div class="select-btn" (click)="toggleMenu()">
+        <span class="sBtn-text">{{ selectedCountry.toUpperCase() }}</span>
+        <i class="fas fa-angle-down"></i>
+      </div>
+
+      <ul class="options">
+        <li class="option" (click)="selectOption($event, 'fr')">
+          <img src="images/flag-for-flag-france-svgrepo-com.svg" alt="" />
+          <span class="option-text">FR</span>
+        </li>
+        <li class="option" (click)="selectOption($event, 'en')">
+          <img src="images/en.webp" alt="" />
+          <span class="option-text">EN</span>
+        </li>
+      </ul>
+    </div> -->
+    <!-- fin du selecteur de langue  -->
+
+    <!-- icone de notification  -->
+    <!-- <button mat-icon-button>
+      <mat-icon matTooltip="Notifications">notifications</mat-icon>
+    </button> -->
+
+    <!-- image du profil  -->
+
+    <div class="profil" (click)="toggleModal($event)">
+      <div class="image">
+        <img *ngIf="safeImageUrl; else noImage" [src]="safeImageUrl" />
+        <ng-template #noImage>
+          <img src="/images/freelancer.png" alt="user" />
+        </ng-template>
+      </div>
+
+      <ul
+        class="list"
+        [ngClass]="{ show: isModalVisible }"
+        (click)="$event.stopPropagation()"
+      >
+        <li (click)="onOptionSelectedProfil($event)">
+          <a routerLink="/dashboard/profil"
+            ><mat-icon>person</mat-icon><span>Profil</span></a
+          >
+        </li>
+        <li
+          *ngIf="role === 'ADMINISTRATEUR'"
+          (click)="onOptionSelectedSetting($event)"
+        >
+          <a routerLink="/dashboard/parametres"
+            ><mat-icon>settings</mat-icon><span>Paramètres</span></a
+          >
+        </li>
+        <button (click)="onOptionSelectedDeconnexion($event)">
+          <mat-icon>logout</mat-icon><span>Deconnexion</span>
+        </button>
+      </ul>
+
+      <span class="online"></span>
+    </div>
+  </div>
+</mat-toolbar>
+
+<!-- debut de la sidenav  -->
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #sidenav
+    [mode]="sidenavMode"
+    [(opened)]="isSidenavOpen"
+    [class.collapsed]="!isSidenavOpen && isLargeScreen"
+  >
+    <div class="image">
+      <p class="img">
+        <img *ngIf="safeImageUrl; else noImage" [src]="safeImageUrl" />
+        <ng-template #noImage>
+          <img src="/images/user.png" alt="user" />
+        </ng-template>
+      </p>
+      <p>{{ fullname }}</p>
+    </div>
+    <ul class="sidenav-content">
+      <a routerLink="/dashboard/accueil" routerLinkActive="router-link-active"
+        ><mat-icon>dashboard</mat-icon> {{ "Dashboard" | translate }}</a
+      >
+      <a routerLink="/dashboard/session" routerLinkActive="router-link-active"
+        ><mat-icon>groups</mat-icon>{{ "Session" | translate }}</a
+      >
+      <a routerLink="/dashboard/etudiant" routerLinkActive="router-link-active"
+        ><mat-icon>face</mat-icon>{{ "Etudiant" | translate }}</a
+      >
+      <div class="list">
+        <input type="checkbox" id="dropdown" />
+        <label for="dropdown">
+          <span><mat-icon>school</mat-icon>{{ "Formations" | translate }}</span
+          ><span><mat-icon>chevron_right</mat-icon></span>
+        </label>
+        <ul>
+          <li>
+            <a
+              routerLink="/dashboard/specificite"
+              routerLinkActive="router-link-active"
+              >Spécificités</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboard/liste-formattions"
+              routerLinkActive="router-link-active"
+              >Liste Formations</a
+            >
+          </li>
+        </ul>
+      </div>
+      <a routerLink="/dashboard/campus" routerLinkActive="router-link-active"
+        ><mat-icon>apartment</mat-icon>{{ "Campus" | translate }}</a
+      >
+      <a
+        *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+        routerLink="/dashboard/paiement"
+        routerLinkActive="router-link-active"
+        ><mat-icon>payments</mat-icon>{{ "paiement" | translate }}</a
+      >
+      <a routerLink="/dashboard/cours" routerLinkActive="router-link-active"
+        ><mat-icon>book</mat-icon>{{ "Matière" | translate }}</a
+      >
+      <a
+        routerLink="/dashboard/demarrer-matiere"
+        routerLinkActive="router-link-active"
+        ><mat-icon>play_lesson</mat-icon>{{ "Demarrer matière" | translate }}</a
+      >
+      <a
+        routerLink="/dashboard/professeur"
+        routerLinkActive="router-link-active"
+        ><mat-icon>person_3</mat-icon>{{ "Professeur" | translate }}</a
+      >
+      <a routerLink="/dashboard/tuteur" routerLinkActive="router-link-active"
+        ><mat-icon>supervisor_account</mat-icon>{{ "Tuteur" | translate }}</a
+      >
+      <ng-container *ngIf="role === 'ADMINISTRATEUR'">
+        <a
+          routerLink="/dashboard/statistique"
+          routerLinkActive="router-link-active"
+        >
+          <mat-icon>bar_chart_4_bars</mat-icon>
+          {{ "Statistiques" | translate }}
+        </a>
+
+        <a
+          routerLink="/dashboard/liste-utilisateurs"
+          routerLinkActive="router-link-active"
+        >
+          <mat-icon>group</mat-icon>
+          {{ "Liste d'utilisateurs" | translate }}
+        </a>
+      </ng-container>
+    </ul>
+  </mat-sidenav>
+
+  <!-- contenu du site  -->
+  <mat-sidenav-content class="main-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<ngx-spinner></ngx-spinner>

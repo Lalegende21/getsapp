@@ -1,0 +1,60 @@
+<form [formGroup]="addCourseForm" (ngSubmit)="addCourse()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Enregistrer une matière</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ nom  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Nom</mat-label>
+          <input formControlName="name" matInput placeholder="Javascript" />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addCourseForm.hasError('required', 'name') &&
+            addCourseForm.controls['name'].touched
+          "
+          >Le nom de la matière est obligatoire!</span
+        >
+        <span
+          class="error"
+          *ngIf="
+            addCourseForm.hasError('minlength', 'name') &&
+            addCourseForm.controls['name'].touched
+          "
+          >Le nom de la matière doit avoir 2 caractères minimum!</span
+        >
+      </div>
+
+      <div>
+        <mat-form-field floatLabel="always">
+          <mat-label>Durée</mat-label>
+          <input
+            formControlName="duree"
+            matInput
+            type="number"
+            class="example-right-align"
+            placeholder="0"
+          />
+          <span matTextSuffix>semaine(s)</span>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addCourseForm.hasError('required', 'duree') &&
+            addCourseForm.controls['duree'].touched
+          "
+          >La durée de la matière est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

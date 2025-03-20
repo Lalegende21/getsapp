@@ -1,0 +1,54 @@
+<form [formGroup]="addSessionForm" (ngSubmit)="addSession()">
+  <mat-card>
+    <mat-card-header>
+      <h1>Enregistrer une session de formation</h1>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Validation du champ noms  -->
+      <div class="input">
+        <mat-form-field>
+          <mat-label>Date de debut</mat-label>
+          <input
+            formControlName="dateDebut"
+            matInput
+            placeholder="Ex: Mai 2024"
+          />
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addSessionForm.hasError('required', 'dateDebut') &&
+            addSessionForm.controls['dateDebut'].touched
+          "
+          >La date de debut de session est obligatoire!</span
+        >
+      </div>
+
+      <!-- Validation du champ centre  -->
+      <div>
+        <mat-form-field>
+          <mat-label>Campus</mat-label>
+          <mat-select formControlName="center">
+            <mat-option *ngFor="let item of center" [value]="item">{{
+              item.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span
+          class="error"
+          *ngIf="
+            addSessionForm.hasError('required', 'center') &&
+            addSessionForm.controls['center'].touched
+          "
+          >Le centre est obligatoire!</span
+        >
+      </div>
+    </mat-card-content>
+
+    <div class="button">
+      <button type="submit">Enregistrer</button>
+      <button (click)="closePopup()">Annuler</button>
+    </div>
+  </mat-card>
+</form>

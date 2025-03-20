@@ -1,0 +1,237 @@
+<section>
+  <!-- Afficher un message si aucune session  n'est enregistrée -->
+  <div *ngIf="tutorTotal === 0; else tutor" class="no-data">
+    <p>Aucun tuteur enregistré !</p>
+  </div>
+
+  <ng-template #tutor>
+    <!-- start section1  -->
+    <div class="first-section">
+      <h1>tuteur</h1>
+      <div class="second-bloc">
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ tutorTotal }}</p>
+              <h2>tuteurs totals</h2>
+            </div>
+            <span><mat-icon>person_3</mat-icon></span>
+          </div>
+          <p>{{ lastTutor.fullname }}</p>
+        </div>
+        <div class="card">
+          <div class="title">
+            <div>
+              <p>{{ tutorFrequentlyTotal }}</p>
+              <h2>tuteurs ajoutés recemment</h2>
+            </div>
+            <span><mat-icon>person_3</mat-icon></span>
+          </div>
+          <p>
+            {{
+              lastTutorRecently
+                ? lastTutorRecently.fullname
+                : "Aucun tuteur enregisté récemment"
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- end section1  -->
+
+    <!-- start section2  -->
+    <div class="second-section">
+      <div class="sort">
+        <h2>Rechercher par:</h2>
+
+        <!-- all options  -->
+        <div class="options">
+          <!-- first option  -->
+          <input type="checkbox" name="#" id="check" />
+          <div class="option">
+            <div class="label1">
+              <label for="check"
+                ><mat-icon>sort_by_alpha</mat-icon><span>Noms</span></label
+              >
+            </div>
+            <div class="input1">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  #filterName
+                  (keyup)="filterByName(filterName.value)"
+                  name="#"
+                  id="#"
+                  placeholder="Noms..."
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- second option  -->
+          <input type="checkbox" name="#" id="check2" />
+          <div class="option">
+            <div class="label2">
+              <label for="check2"
+                ><mat-icon>call</mat-icon><span>Numéro Téléphone</span></label
+              >
+            </div>
+            <div class="input2">
+              <div>
+                <mat-icon>search</mat-icon>
+                <input
+                  type="search"
+                  #filterPhone
+                  (keyup)="filterByPhone(filterPhone.value)"
+                  name="#"
+                  id="input2"
+                  placeholder="Numéro de Téléphone..."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- table of tuteur -->
+      <div class="cards" [@pageTransition]="currentPageState">
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th (click)="sortData('fullname')">
+                Nom <span [ngClass]="getSortIcon('fullname')"></span>
+              </th>
+              <th (click)="sortData('phonenumber')">
+                Numero Téléphone
+                <span [ngClass]="getSortIcon('phonenumber')"></span>
+              </th>
+              <th (click)="sortData('typeTutor')">
+                Type de tuteur
+                <span [ngClass]="getSortIcon('typeTutor')"></span>
+              </th>
+              <th class="date-enregistrement">Date d'enregistrement</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of currentVisibleData; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td class="startDate">
+                <span
+                  ><img
+                    *ngIf="item.img; else defaultImage"
+                    [src]="'data:image/jpeg;base64,' + item.img.data"
+                    alt="Image session" />
+                  <ng-template #defaultImage>
+                    <img
+                      src="images/unnamed.jpg"
+                      alt="unnamed.jpg"
+                    /> </ng-template></span
+                ><span>{{ item.fullname }}</span>
+              </td>
+              <td>{{ item.phonenumber }}</td>
+              <td>{{ item.typeTutor }}</td>
+              <td class="date-enregistrement">{{ item.createDate }}</td>
+              <td class="more">
+                <button class="more-icon" (click)="toggleModal(i, $event)">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <div
+                  class="modal"
+                  [ngClass]="{ show: isModalVisible[i] }"
+                  (click)="$event.stopPropagation()"
+                >
+                  <div class="text">
+                    <button (click)="consulterProfessor(item.id)">
+                      <img
+                        src="/images/eye-svgrepo-com.svg"
+                        alt="eye-svgrepo-com.svg"
+                      />
+                      <span class="see">Consulter</span>
+                    </button>
+                  </div>
+                  <div
+                    *ngIf="
+                      role === 'EDITEUR' ||
+                      role === 'MANAGER' ||
+                      role === 'ADMINISTRATEUR'
+                    "
+                    class="text"
+                  >
+                    <button
+                      (click)="
+                        updateProfessor(
+                          item.id,
+                          item.fullname,
+                          item.email,
+                          item.phonenumber,
+                          item.typeTutor
+                        )
+                      "
+                    >
+                      <img
+                        src="/images/write-svgrepo-com.svg"
+                        alt="write-svgrepo-com.svg"
+                      />
+                      <span class="update">Modifier</span>
+                    </button>
+                  </div>
+                  <div
+                    *ngIf="role === 'MANAGER' || role === 'ADMINISTRATEUR'"
+                    class="text"
+                  >
+                    <button
+                      (click)="onOptionSelectedDelete(i, $event, item.id)"
+                    >
+                      <img
+                        src="/images/delete-svgrepo-com.svg"
+                        alt="delete-svgrepo-com.svg"
+                      />
+                      <span class="delete">Supprimer</span>
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- pagination  -->
+      <div class="pagination">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">
+          Précédent
+        </button>
+        <span *ngFor="let page of pageNumbers()">
+          <button
+            [class.active]="page === currentPage"
+            (click)="changePageWithAnimation(page)"
+          >
+            {{ page }}
+          </button>
+        </span>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage === pageNumbers().length"
+        >
+          Suivant
+        </button>
+      </div>
+    </div>
+    <!-- end section2  --->
+  </ng-template>
+
+  <!-- add button professor  -->
+  <app-add-buttton
+    *ngIf="
+      role === 'CONTRIBUTEUR' ||
+      role === 'EDITEUR' ||
+      role === 'MANAGER' ||
+      role === 'ADMINISTRATEUR'
+    "
+    [buttonText]="'Ajouter un tuteur'"
+    (click)="addTutor()"
+  ></app-add-buttton>
+</section>
